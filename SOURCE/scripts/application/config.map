@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "config.js",
+  "sourceRoot": "../../../../../../../../home/scips",
+  "sources": [
+    "../../var/www/github/RTBF/webapp-directplus/SOURCE/scripts/application/config.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,CACE,KADF;CACE,CAAA,OAAA,cAAA;CADF,CAAA"
+}

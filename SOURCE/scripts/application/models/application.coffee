@@ -1,10 +1,11 @@
 define [
+  'application/config'
   'application/routes/router'
   'application/models/slide'
   'application/collections/slides'
-   'application/views/appView'
+  'application/views/appView'
   'vendors/socketio/socketio'
-  ],(Router, Slide, SlidesList,AppView)->
+  ],(Config,Router, Slide, SlidesList,AppView)->
     
   ###
     Gere les communication serveur
@@ -18,7 +19,7 @@ define [
 
 
     init:() ->
-      @socket = io.connect 'http://localhost:3000'
+      @socket = io.connect Config.serverUrl
 
       @router.on 'orgRoute', ()=>
         @connect()
