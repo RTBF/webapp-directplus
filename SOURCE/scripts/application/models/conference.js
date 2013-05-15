@@ -9,6 +9,10 @@ define(['jquery', 'backbone', 'application/collections/slides', 'application/mod
     __extends(Conference, _super);
 
     Conference.prototype.defaults = {
+      name: ' ',
+      tumb: ' ',
+      description: ' ',
+      date: new Date(),
       slidesC: new Slides()
     };
 
@@ -50,19 +54,16 @@ define(['jquery', 'backbone', 'application/collections/slides', 'application/mod
       this.get('slidesC').fetch();
       len = data.length - 1;
       slideLen = this.get('slidesC').length - 1;
-      if (slideLen !== len || data[0]._conf !== this.get('_id')) {
-        console.log("jjj");
-        this.get('slidesC').reset();
-        localStorage.clear();
+      this.get('slidesC').reset();
+      localStorage.clear();
+      this.get('slidesC').fetch();
+      for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
+        obj = $.parseJSON(data[x].JsonData);
+        obj.id = data[x]._id;
+        slide = new Slide(obj);
+        this.get('slidesC').add(slide);
+        slide.save();
         this.get('slidesC').fetch();
-        for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
-          obj = $.parseJSON(data[x].JsonData);
-          obj.id = data[x]._id;
-          slide = new Slide(obj);
-          this.get('slidesC').add(slide);
-          slide.save();
-          this.get('slidesC').fetch();
-        }
       }
       this.get('slidesC').each(function(slide) {
         return slide.set('state', 'out');

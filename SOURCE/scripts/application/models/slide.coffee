@@ -7,6 +7,8 @@ define [
     class Slide extends Backbone.Model
 
       defaults:
+        title:' '
+        description: ' ' 
         Order: 0
      
       constructor: (aSlide)->

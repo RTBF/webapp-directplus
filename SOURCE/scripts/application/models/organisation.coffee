@@ -8,6 +8,9 @@ define [
     class Organisation extends Backbone.Model
 
       defaults:
+        name: ' '
+        tumb: ' '
+        description: ' '
         conferencesC: new Conferences()
 
      

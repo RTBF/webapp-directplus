@@ -9,6 +9,8 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
     __extends(Slide, _super);
 
     Slide.prototype.defaults = {
+      title: ' ',
+      description: ' ',
       Order: 0
     };
 

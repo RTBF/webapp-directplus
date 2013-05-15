@@ -29,6 +29,7 @@ define(['jquery', 'backbone', 'application/views/conferenceView', 'bootstrap'], 
       modelId = '#' + this.model.get('id');
       if (this.model.get('state') === 'removed') {
         $(modelId).parent().slideUp();
+        $(modelId).parent().remove();
         slidet = this.model.get('title');
         $('.bottom-right').notify({
           type: 'inverse',
