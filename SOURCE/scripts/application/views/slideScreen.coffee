@@ -21,6 +21,7 @@ define [
         modelId = '#'+@model.get('id')
         if @model.get('state') is 'removed'
           $(modelId).parent().slideUp()
+          $(modelId).parent().remove()
           slidet=@model.get 'title'
           $('.bottom-right').notify
             type: 'inverse'

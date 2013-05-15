@@ -8,6 +8,10 @@ define [
     class Conference extends Backbone.Model
 
       defaults:
+        name: ' '
+        tumb: ' '
+        description: ' '
+        date: new Date()
         slidesC: new Slides()
 
       constructor: (aConf)->
@@ -39,18 +43,18 @@ define [
         len = data.length - 1
         slideLen = @get('slidesC').length - 1
 
-        if slideLen != len || data[0]._conf != @get '_id'
-          console.log "jjj"
-          @get('slidesC').reset()
-          localStorage.clear()
+        
+        
+        @get('slidesC').reset()
+        localStorage.clear()
+        @get('slidesC').fetch()
+        for x in [0..len]
+          obj = $.parseJSON data[x].JsonData
+          obj.id = data[x]._id
+          slide = new Slide obj
+          @get('slidesC').add slide
+          slide.save()
           @get('slidesC').fetch()
-          for x in [0..len]
-            obj = $.parseJSON data[x].JsonData
-            obj.id = data[x]._id
-            slide = new Slide obj
-            @get('slidesC').add slide
-            slide.save()
-            @get('slidesC').fetch()
         @get('slidesC').each (slide)->
           slide.set 'state', 'out'
         taille = @get('slidesC').length

@@ -9,6 +9,9 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
     __extends(Organisation, _super);
 
     Organisation.prototype.defaults = {
+      name: ' ',
+      tumb: ' ',
+      description: ' ',
       conferencesC: new Conferences()
     };
 
