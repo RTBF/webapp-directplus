@@ -9,7 +9,7 @@ define [
       #el: '#appcontainer'
 
       tagName : 'li'
-      className : 'organisation'
+      className : 'organisation '
       
       events:
         'click .org-item' : 'choose'
@@ -18,23 +18,26 @@ define [
       template : _.template($('#Organisation-template').html())
 
       initialize : ()->
-        @listenTo @model, 'change:conferencesC', @render
+        @listenTo @model, 'change:conferencesC', @renderConfList
        
 
       render: ()-> 
-        $('.confList').children().remove()
-        console.log "Je suis lorganisation et je me renderer"
         @$el.html @template(@model.toJSON())
+        @
+        
+      renderConfList:()->
+        $('.conference').remove()
         @model.get('conferencesC').each (conference)->
           conferenceView = new ConferenceView ({model:conference})
-          $('.confList').append(conferenceView.render().el)
+          $('.conferenceList').append(conferenceView.render().el)
         @
-      
+
       choose:(ev)->
         #
-        console.log ev.target
-        id = $(ev.target).attr('id')
-        Backbone.history.navigate('/conference/orgid' , trigger:true)
-
+        
+        id = @model.get 'id'
+        href =  '/conference/' + id
+        console.log href
+        Backbone.history.navigate(href, trigger:true)
 
 

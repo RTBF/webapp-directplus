@@ -17,10 +17,10 @@ define [
           console.log "mainV connected"
           @connectNotif(data)
 
-        $('#appcontainer').delegate '.org-item', 'click', (e)=>
+        ###$('#appcontainer').delegate '.org-item', 'click', (e)=>
           txt = $(e.target).attr('id')
           @model.organisationChoosed txt
-          @trigger 'organisationChoosed', txt
+          @trigger 'organisationChoosed', txt###
 
 
         $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
@@ -47,14 +47,15 @@ define [
           $('.label').slideDown()
 
       render: ()-> 
-        $('.organisationsList').children().remove()
+        $('.organisation').remove()
         console.log "main view is redenring"
         ###if $('#header').is ':empty'
           @$el.html @template()###
 
         @model.get('organisations').each (organisation)->
           organisationView = new OrganisationView ({model:organisation})
-          $('.organisationsList').append(organisationView.render().el)
+          $('.dropdown-menu').append(organisationView.render().el)
+        $('.emissions').text $('#all-shows').text()
 
         $("#loading").fadeOut()
         $("#wrap").fadeIn()

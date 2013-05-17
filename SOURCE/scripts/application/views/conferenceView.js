@@ -14,7 +14,7 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
 
     ConferenceView.prototype.tagName = 'li';
 
-    ConferenceView.prototype.className = 'conf span4';
+    ConferenceView.prototype.className = 'conference';
 
     ConferenceView.prototype.template = _.template($('#conf-template').html());
 

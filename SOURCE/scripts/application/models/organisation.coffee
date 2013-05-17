@@ -27,6 +27,8 @@ define [
         len = data.length - 1
         for x in [0..len]
           conference = new Conference data[x]
+          conference.set 'id', data[x]._id
+          conference.set 'orgName', @get 'name'
           @get('conferencesC').add conference
         @trigger 'change:conferencesC'
 

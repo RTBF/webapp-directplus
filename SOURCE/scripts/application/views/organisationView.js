@@ -14,7 +14,7 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
 
     OrganisationView.prototype.tagName = 'li';
 
-    OrganisationView.prototype.className = 'organisation';
+    OrganisationView.prototype.className = 'organisation ';
 
     OrganisationView.prototype.events = {
       'click .org-item': 'choose'
@@ -23,28 +23,32 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
     OrganisationView.prototype.template = _.template($('#Organisation-template').html());
 
     OrganisationView.prototype.initialize = function() {
-      return this.listenTo(this.model, 'change:conferencesC', this.render);
+      return this.listenTo(this.model, 'change:conferencesC', this.renderConfList);
     };
 
     OrganisationView.prototype.render = function() {
-      $('.confList').children().remove();
-      console.log("Je suis lorganisation et je me renderer");
       this.$el.html(this.template(this.model.toJSON()));
+      return this;
+    };
+
+    OrganisationView.prototype.renderConfList = function() {
+      $('.conference').remove();
       this.model.get('conferencesC').each(function(conference) {
         var conferenceView;
         conferenceView = new ConferenceView({
           model: conference
         });
-        return $('.confList').append(conferenceView.render().el);
+        return $('.conferenceList').append(conferenceView.render().el);
       });
       return this;
     };
 
     OrganisationView.prototype.choose = function(ev) {
-      var id;
-      console.log(ev.target);
-      id = $(ev.target).attr('id');
-      return Backbone.history.navigate('/conference/orgid', {
+      var href, id;
+      id = this.model.get('id');
+      href = '/conference/' + id;
+      console.log(href);
+      return Backbone.history.navigate(href, {
         trigger: true
       });
     };

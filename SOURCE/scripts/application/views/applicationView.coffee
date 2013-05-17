@@ -38,14 +38,14 @@ define [
         #@
 
       fullFillOrgList: (data)->
-        $(".organisationsList").children().remove()
+        $(".organisation").remove()
         len = data.length - 1
         console.log len
         for x in [0..len]
           organisation = new Organisation data[x]
           console.log organisation
           organisationView = new OrganisationView ({model:organisation})
-          $('.organisationsList').append(organisationView.render().el)
+          $('.dropdown-menu').append(organisationView.render().el)
         
         $("#loading").fadeOut()
         $("#wrap").fadeIn()

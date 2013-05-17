@@ -47,9 +47,10 @@ define [
       conferenceScreen: (orgid)->
         #@navigate '//lol', trigger:true
         $('.slides').fadeOut()
-        $('.organisationsBlock').removeClass('onshow')
+        ###$('.organisationsBlock').removeClass('onshow')
         $('.confBlock').show ()->
-          $('.confBlock').addClass('onshow')
+          $('.confBlock').addClass('onshow')###
+        @trigger 'confRoute', orgid
           
 
       slideScreen: ()->

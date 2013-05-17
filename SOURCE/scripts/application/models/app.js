@@ -47,10 +47,10 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       if (len >= 0) {
         for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
           organisation = new Organisation(data[x]);
+          organisation.set('id', data[x]._id);
           this.get('organisations').add(organisation);
         }
-        this.trigger('change:organisations');
-        return console.log(this.get('organisations'));
+        return this.trigger('change:organisations');
       }
     };
 
@@ -59,7 +59,7 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       console.log(data);
       len = data.length - 1;
       if (len >= 0) {
-        return this.get('organisation').restore(data);
+        return this.get('organisations').get(data[0]._orga).restore(data);
       }
     };
 

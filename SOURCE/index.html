@@ -19,7 +19,10 @@
       <div class="ball1"></div>
     </div>
   </div>
-  <div id="header"> 
+ 
+  
+  <div id="wrap">
+     <div id="header"> 
   <div class="navbar navbar-inverse navbar-fixed-top">
 
     <div class="navbar-inner">
@@ -46,42 +49,41 @@
            
    </div>
  </div></div>
-  
-  <div id="wrap">
     
 
     <div id="appcontainer" >
       <div class='notifications bottom-right'></div>
 
 
-      <div class=" container organisationsBlock onshow onhideleft">
+      <div class=" container confBlock ">
             <div class="dropdown">
-               <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
-Dropdown
-<b class="caret"></b>
-</a>
-    <!-- Link or button to toggle dropdown -->
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+               <a class="dropdown-toggle btn btn-inverse btn-large container "  data-toggle="dropdown" href="#">
+                <span class="emissions" >Dropdown</span>
+                 
+                    <b class="caret"></b>
+                </a>
+                    <!-- Link or button to toggle dropdown -->
+                    <ul class="dropdown-menu container" role="menu" aria-labelledby="dLabel">
 
-    <li><a tabindex="-1" href="#">Action</a></li>
-    <li><a tabindex="-1" href="#">Another action</a></li>
-    <li><a tabindex="-1" href="#">Something else here</a></li>
-    <li class="divider"></li>
-    <li><a tabindex="-1" href="#">Separated link</a></li>
-    </ul>
-    </div>
-      <ul class="organisationsList"></ul>
-      </div>
-      <div class="container confBlock onhideright">
-      <ul class="confList thumbnails"></ul>
-      </div>
-      <div class= "slides">
-        
-        <ul  id ="SlideList"></ul>
-        <button id="precedent" class="left carousel-control">‹</button>
-        <button id="suivant" class="right carousel-control">›</button>
+                    <li><a tabindex="-1" id="all-shows" href="#">Toutes les emissions</a></li>
+                     
 
-      </div>
+                    </ul>
+
+
+                    </div>
+                      <ul class="conferenceList"></ul>
+                      </div>
+                      <!--<div class="container confBlock onhideright">
+                      <ul class="confList thumbnails"></ul>
+                      </div>-->
+                      <div class= "slides">
+                        
+                        <ul  id ="SlideList"></ul>
+                        <button id="precedent" class="left carousel-control">‹</button>
+                        <button id="suivant" class="right carousel-control">›</button>
+
+                      </div>
     </div>
 
 
@@ -98,18 +100,41 @@ Dropdown
  
  </script>
  
- <script type="text/template" id="Organisation-template"> 
+ <!-- <script type="text/template" id="Organisation-template"> 
     <div class="row-fluid">
-      <div class="span4"><img  height="200" title="RTBF" alt="RTBF" src="<%-tumb%>" class="img-rounded"></div>
+      <div class="span4"><img  height="200" title="RTBF" src="<%-tumb%>" class="img-rounded"></div>
       <div class="span6"><a class="org-item" ><h3 id="<%- _id %>"><%- name%></h3></a></div>
       <div class="span2"><i class="icon-chevron-right"></i></div>
-      
-      
     </div>
+ </script>-->
+
+<script type="text/template" id="conf-template"> 
+    <div class="row-fluid org-item">
+      <div class="span3">
+         <div class="thumbnail">
+        <img  alt="150x100" data-src="holder.js/300x200" style="width: 150px; height: 100px;" src="<%-tumb%>">
+        </div>
+      </div>
+
+      <div class="span6">
+      <h2 id="<%- _id %>"><%- orgName%></h2>
+      <h3 id="<%- _id %>"><%- name%></h3>
+      <p><%- description %></p>
+      </div>
+
+      <div class="span3">
+      <i class="icon-chevron-right"></i>
+      </div>
+
+    </div>
+ </script>
+ <script type="text/template" id="Organisation-template"> 
+
+  <a class="org-item" id="<%- id%>" tabindex="-1" ><%- name%></a>
  </script>
  
 
- <script type="text/template" id="conf-template"> 
+ <!-- <script type="text/template" id="conf-template"> 
   <div class="thumbnail">
   <img alt="300x200" data-src="holder.js/300x200" style="width: 300px; height: 200px;" src="<%-tumb%>">
    <div class="caption">
@@ -119,7 +144,7 @@ Dropdown
     </div>
    </div>
    
- </script>
+ </script>-->
 
 
 

@@ -23,12 +23,12 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
         console.log("mainV connected");
         return _this.connectNotif(data);
       });
-      $('#appcontainer').delegate('.org-item', 'click', function(e) {
-        var txt;
-        txt = $(e.target).attr('id');
-        _this.model.organisationChoosed(txt);
-        return _this.trigger('organisationChoosed', txt);
-      });
+      /*$('#appcontainer').delegate '.org-item', 'click', (e)=>
+        txt = $(e.target).attr('id')
+        @model.organisationChoosed txt
+        @trigger 'organisationChoosed', txt
+      */
+
       $('#appcontainer').delegate('.conf-item', 'click ', function(e) {
         var txt;
         txt = $(e.target).attr('id');
@@ -57,7 +57,7 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
     };
 
     mainView.prototype.render = function() {
-      $('.organisationsList').children().remove();
+      $('.organisation').remove();
       console.log("main view is redenring");
       /*if $('#header').is ':empty'
         @$el.html @template()
@@ -68,8 +68,9 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
         organisationView = new OrganisationView({
           model: organisation
         });
-        return $('.organisationsList').append(organisationView.render().el);
+        return $('.dropdown-menu').append(organisationView.render().el);
       });
+      $('.emissions').text($('#all-shows').text());
       $("#loading").fadeOut();
       return $("#wrap").fadeIn();
     };

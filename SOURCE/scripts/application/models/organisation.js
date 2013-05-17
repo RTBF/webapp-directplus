@@ -31,6 +31,8 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
       len = data.length - 1;
       for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
         conference = new Conference(data[x]);
+        conference.set('id', data[x]._id);
+        conference.set('orgName', this.get('name'));
         this.get('conferencesC').add(conference);
       }
       return this.trigger('change:conferencesC');

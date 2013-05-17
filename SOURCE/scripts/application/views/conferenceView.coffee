@@ -9,7 +9,7 @@ define [
       #el: '#appcontainer'
       
       tagName : 'li'
-      className : 'conf span4'
+      className : 'conference'
 
       template : _.template($('#conf-template').html())
 

@@ -40,7 +40,7 @@ define(['jquery', 'backbone', 'application/models/slide', 'application/views/sli
 
     appView.prototype.fullFillOrgList = function(data) {
       var len, organisation, organisationView, x, _i;
-      $(".organisationsList").children().remove();
+      $(".organisation").remove();
       len = data.length - 1;
       console.log(len);
       for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
@@ -49,7 +49,7 @@ define(['jquery', 'backbone', 'application/models/slide', 'application/views/sli
         organisationView = new OrganisationView({
           model: organisation
         });
-        $('.organisationsList').append(organisationView.render().el);
+        $('.dropdown-menu').append(organisationView.render().el);
       }
       $("#loading").fadeOut();
       return $("#wrap").fadeIn();

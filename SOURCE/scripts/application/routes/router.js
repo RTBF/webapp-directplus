@@ -46,10 +46,12 @@ define(['jquery', 'backbone', 'application/views/mainView', 'application/models/
 
     Router.prototype.conferenceScreen = function(orgid) {
       $('.slides').fadeOut();
-      $('.organisationsBlock').removeClass('onshow');
-      return $('.confBlock').show(function() {
-        return $('.confBlock').addClass('onshow');
-      });
+      /*$('.organisationsBlock').removeClass('onshow')
+      $('.confBlock').show ()->
+        $('.confBlock').addClass('onshow')
+      */
+
+      return this.trigger('confRoute', orgid);
     };
 
     Router.prototype.slideScreen = function() {

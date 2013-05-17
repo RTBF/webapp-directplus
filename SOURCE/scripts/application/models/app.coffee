@@ -34,16 +34,16 @@ define [
         if len>=0
           for x in [0..len]
             organisation = new Organisation data[x]
+            organisation.set 'id', data[x]._id
             @get('organisations').add organisation
           @trigger 'change:organisations'
-          console.log @get 'organisations'
 
       restoreConf : (data)->
         console.log data
         len = data.length - 1
 
         if len>=0
-          @get('organisation').restore data
+          @get('organisations').get(data[0]._orga).restore data
 
 
       restoreSlides : (data)->
