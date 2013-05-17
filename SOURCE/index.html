@@ -10,7 +10,7 @@
   <link href="skins/css/application/app.css" rel="stylesheet" media="screen">
 </head>
 
-<body>
+<body >
 
   <div id="loading">
     <div class="container">
@@ -25,18 +25,20 @@
     <div class="navbar-inner">
       <div class="container">
         <div class="nav-collapse collapse"></div>
-        <ul class="nav">
-          <li >
-           <a href="#/organisation">Home</a>
+        
+        <ul class="nav container">
+          <li class="pull-left active ">
+           <a href="#/organisation"> Home</a>
          </li>
-         <li >
-           <a href="">About</a>
+         <li class="pull-center">
+               <img  class="logo" src="http://projet.local.rtbf.be/Test/img/RTBF_BE.png">
          </li>
-       </ul>
-
-       <span class= "js-status disconnected " >  &nbsp;</span>  
-       <span class="labels"><span class="label label-important">disconnected</span></span>
-       <span class="brand">WEB CONFERENCE</span>
+          <li class=" pull-right">
+       <a href="#/organisation"> about</a>
+       </li>
+         
+        
+        </ul>
        
   
        
@@ -53,6 +55,21 @@
 
 
       <div class=" container organisationsBlock onshow onhideleft">
+            <div class="dropdown">
+               <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
+Dropdown
+<b class="caret"></b>
+</a>
+    <!-- Link or button to toggle dropdown -->
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+
+    <li><a tabindex="-1" href="#">Action</a></li>
+    <li><a tabindex="-1" href="#">Another action</a></li>
+    <li><a tabindex="-1" href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li><a tabindex="-1" href="#">Separated link</a></li>
+    </ul>
+    </div>
       <ul class="organisationsList"></ul>
       </div>
       <div class="container confBlock onhideright">

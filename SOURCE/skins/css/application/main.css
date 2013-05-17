@@ -16,11 +16,16 @@ ul {
 
 
 .organisation{
+    padding-top: 10px
+
+}
+
+.organisation .row-fluid{
     cursor:pointer;
-    border-top: 1px solid #DDDDDD; 
     line-height: 30px;
     opacity: 1.00;
-
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .onshow.onhideright{
 margin-left:10%; 
@@ -106,8 +111,8 @@ margin-left:10%;
   visibility: visible;
   display: block;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  
+  
   border-radius: 10px 10px 10px 10px;
   padding: 20px ;
   margin-top: 50px;
@@ -156,8 +161,8 @@ margin-left:10%;
   float: right;
 }
 .navbar .brand{
-  float: right;
-  color: #000000;
+  /*float: right;*/
+  
     float: right;
     font-weight: bold;
     margin-left: 20px;
@@ -214,11 +219,14 @@ margin-left:10%;
   float: left;
   margin: 30px;
 }
-#header .container{
+#header div.container{
   width: 80%;
 }
 .container{
   width: 80%;
+}
+.nav.container{
+  width: 100%;
 }
 
 .SlideList {
@@ -229,7 +237,7 @@ margin-left:10%;
   height: 100%;
   left: 0;
   top: 0;
-  margin-top: 50px;
+  /*margin-top: 50%;*/
   /*position: absolute;*/
   -webkit-transition: -webkit-transform 1.5s ease-in-out;
   -moz-transition: -moz-transform 1.5s ease-in-out;
@@ -257,6 +265,7 @@ margin-left:10%;
   border-radius: 10px; 
   -moz-border-radius: 10px;
   opacity: 0.40;
+  top: 10%;
 
   -webkit-transform: scale(0.8) translateZ(0);
   -moz-transform: scale(0.8);
@@ -306,8 +315,30 @@ margin-left:10%;
   display: block;
   margin-left: 1500px;
 }
+.logo{
+  height: 40px;
+}
+.brand-center{
+  text-align: center;
+}
+.navbar .nav .pull-right{
+  float:right; 
+  display:inline-block;
+}
+.navbar .nav li { 
+  display:inline-block;
+}
+.navbar .nav .pull-center { 
+        float:none; 
+        display:inline-block;
+        *display: inline; *zoom: 1; /*IE7 inline-block hack */
+        text-align: center;
+        margin-left: 35%;
+    text-align: center;
+    width: auto;
+    }
 
-@media (max-width: 480px) { 
+@media (max-width: 490px) { 
   .slide {
     width: 400px;
     min-height: 200px;
@@ -316,6 +347,7 @@ margin-left:10%;
     margin-left: -200px;
   }
 }
+
 @media (max-width: 767px) {
   .slide {
     width: 650px;
@@ -325,6 +357,7 @@ margin-left:10%;
     margin-left: -325px;
   }
 }
+
 @media (min-width: 768px) and (max-width: 979px) { 
   .slide {
     width: 800px;
@@ -342,6 +375,10 @@ margin-left:10%;
   .slide.current {
     margin-left: -540px;
   }
+  .slide.past {
+
+  margin-left: -1580px;
+}
 }  
 
 
