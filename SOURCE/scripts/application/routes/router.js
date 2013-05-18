@@ -11,28 +11,20 @@ define(['jquery', 'backbone', 'application/views/mainView', 'application/models/
     Router.prototype.routes = {
       'organisation': 'organisationScreen',
       'conference/:orgid': 'conferenceScreen',
-      'slide': 'slideScreen',
+      'slides/:confid': 'slideScreen',
       '*actions': 'organisationScreen'
     };
 
-    function Router() {
+    function Router(socket) {
+      this.socket = socket;
       Router.__super__.constructor.call(this, this.routes);
     }
 
     Router.prototype.initialize = function() {
-      var _this = this;
       this.trigger('orgRoute');
       this.app = new App();
       this.mainView = new MainView({
         model: this.app
-      });
-      this.mainView.on('organisationChoosed', function(data) {
-        console.log('router organisation choosed: ', data);
-        return _this.trigger('confRoute', data);
-      });
-      this.mainView.on('conferenceChoosed', function(data) {
-        console.log('router conference choosed: ', data);
-        return _this.trigger('slideRoute', data);
       });
       Backbone.history.start();
       return console.log(" The Route Initialized");
@@ -45,17 +37,22 @@ define(['jquery', 'backbone', 'application/views/mainView', 'application/models/
     };
 
     Router.prototype.conferenceScreen = function(orgid) {
-      $('.slides').fadeOut();
+      console.log("emmission choosed");
       /*$('.organisationsBlock').removeClass('onshow')
       $('.confBlock').show ()->
         $('.confBlock').addClass('onshow')
       */
 
-      return this.trigger('confRoute', orgid);
+      return this.socket.emit('organisationChoosed', orgid);
+      /*@trigger 'confRoute', orgid
+      $('.slides').fadeOut ()->
+        $('.confBlock').fadeIn()
+      */
+
     };
 
-    Router.prototype.slideScreen = function() {
-      $('.organisationsBlock').removeClass('onshow');
+    Router.prototype.slideScreen = function(confid) {
+      this.trigger('slideRoute', confid);
       return $('.confBlock').fadeOut(function() {
         return $('.slides').fadeIn();
       });

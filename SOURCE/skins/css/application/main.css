@@ -190,7 +190,7 @@ margin-left:10%;
   height: 100%;
   width: 100%;
 }
-./*content{
+/*content{
   position: absolute;
   height: 100%;
   width: 100%;
@@ -220,9 +220,13 @@ margin-left:10%;
   float: left;
   margin: 30px;
 }*/
-#header div.container{
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
   width: 80%;
 }
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
+  width: 80%;
+}
+
 .container{
   width: 80%;
 }

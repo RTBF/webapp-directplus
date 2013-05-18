@@ -19,13 +19,13 @@ define [
         @on 'slides', (data)->
           @restoreSlides data
         @on 'newSlide', (data)->
-          @get('organisation').get('conference').trigger 'newSlide', data
+          @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'newSlide', data
         @on 'next', ()->
-          @get('organisation').get('conference').trigger 'next'
+          @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'next'
         @on 'previous', ()->
-          @get('organisation').get('conference').trigger 'previous'
+          @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'previous'
         @on 'sremove',(data)->
-          @get('organisation').get('conference').trigger 'sremove', data
+          @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'sremove', data
 
 
       restore:(data)->
@@ -37,6 +37,8 @@ define [
             organisation.set 'id', data[x]._id
             @get('organisations').add organisation
           @trigger 'change:organisations'
+          @trigger 'initialized'
+        
 
       restoreConf : (data)->
         console.log data
@@ -44,13 +46,15 @@ define [
 
         if len>=0
           @get('organisations').get(data[0]._orga).restore data
+          @set('orgChoose', data[0]._orga)
 
 
       restoreSlides : (data)->
-        console.log data
+        console.log "data:", data
         len = data.length - 1
         if len>=0
-          @get('organisation').get('conference').restore data
+          @get('organisations').get(@get('orgChoose')).get('conferencesC').get(data[0]._conf).restore data
+          @set 'confChoosed', data[0]._conf
 
 
       organisationChoosed : (id)->

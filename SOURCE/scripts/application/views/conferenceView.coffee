@@ -12,6 +12,8 @@ define [
       className : 'conference'
 
       template : _.template($('#conf-template').html())
+      events:
+        'click .conf-item ':'choose'
 
       initialize : ()->
        @listenTo @model, 'change:slidesC', @render
@@ -42,5 +44,15 @@ define [
         else
           console.log "future doesn't exist"
           slideView.new()
+      
+      choose:()->
+        console.log @model
+        confid = @model.get 'id'
+        orgid = @model.get '_orga'
+        href =  '/slides/'+orgid+'/'+confid
+        $(".slide").remove()
+        Backbone.history.navigate(href, trigger:true)
+
+
 
 

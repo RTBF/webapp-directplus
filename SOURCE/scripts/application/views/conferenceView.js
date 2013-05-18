@@ -18,6 +18,10 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
 
     ConferenceView.prototype.template = _.template($('#conf-template').html());
 
+    ConferenceView.prototype.events = {
+      'click .conf-item ': 'choose'
+    };
+
     ConferenceView.prototype.initialize = function() {
       this.listenTo(this.model, 'change:slidesC', this.render);
       return this.listenTo(this.model, 'new', this["new"]);
@@ -57,6 +61,18 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
         console.log("future doesn't exist");
         return slideView["new"]();
       }
+    };
+
+    ConferenceView.prototype.choose = function() {
+      var confid, href, orgid;
+      console.log(this.model);
+      confid = this.model.get('id');
+      orgid = this.model.get('_orga');
+      href = '/slides/' + orgid + '/' + confid;
+      $(".slide").remove();
+      return Backbone.history.navigate(href, {
+        trigger: true
+      });
     };
 
     return ConferenceView;

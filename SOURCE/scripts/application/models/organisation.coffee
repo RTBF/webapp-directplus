@@ -29,6 +29,8 @@ define [
           conference = new Conference data[x]
           conference.set 'id', data[x]._id
           conference.set 'orgName', @get 'name'
+          date= new Date conference.get('date')
+          conference.set 'date', date.toLocaleString()
           @get('conferencesC').add conference
         @trigger 'change:conferencesC'
 

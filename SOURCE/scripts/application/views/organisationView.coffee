@@ -33,11 +33,10 @@ define [
         @
 
       choose:(ev)->
-        #
-        
         id = @model.get 'id'
         href =  '/conference/' + id
         console.log href
+        $('.conference').remove()
         Backbone.history.navigate(href, trigger:true)
 
 

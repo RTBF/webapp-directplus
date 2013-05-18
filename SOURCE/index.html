@@ -65,7 +65,7 @@
                     <!-- Link or button to toggle dropdown -->
                     <ul class="dropdown-menu container" role="menu" aria-labelledby="dLabel">
 
-                    <li><a tabindex="-1" id="all-shows" href="#">Toutes les emissions</a></li>
+                    <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
                      
 
                     </ul>
@@ -107,22 +107,23 @@
       <div class="span2"><i class="icon-chevron-right"></i></div>
     </div>
  </script>-->
-
+<br/>
 <script type="text/template" id="conf-template"> 
-    <div class="row-fluid org-item">
+    <div class="row-fluid conf-item" id="<%- _id %>">
       <div class="span3">
          <div class="thumbnail">
         <img  alt="150x100" data-src="holder.js/300x200" style="width: 150px; height: 100px;" src="<%-tumb%>">
         </div>
       </div>
 
-      <div class="span6">
-      <h2 id="<%- _id %>"><%- orgName%></h2>
-      <h3 id="<%- _id %>"><%- name%></h3>
-      <p><%- description %></p>
+      <div class="span7">
+      <p><%- date %><br/>
+      <strong ><%- orgName%> :
+      <%- name%><br/></strong>
+      <%- description %></p>
       </div>
 
-      <div class="span3">
+      <div class="span2">
       <i class="icon-chevron-right"></i>
       </div>
 

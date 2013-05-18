@@ -48,6 +48,7 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
       id = this.model.get('id');
       href = '/conference/' + id;
       console.log(href);
+      $('.conference').remove();
       return Backbone.history.navigate(href, {
         trigger: true
       });

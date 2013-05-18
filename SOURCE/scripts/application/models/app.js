@@ -27,16 +27,16 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
         return this.restoreSlides(data);
       });
       this.on('newSlide', function(data) {
-        return this.get('organisation').get('conference').trigger('newSlide', data);
+        return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('newSlide', data);
       });
       this.on('next', function() {
-        return this.get('organisation').get('conference').trigger('next');
+        return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('next');
       });
       this.on('previous', function() {
-        return this.get('organisation').get('conference').trigger('previous');
+        return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('previous');
       });
       return this.on('sremove', function(data) {
-        return this.get('organisation').get('conference').trigger('sremove', data);
+        return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('sremove', data);
       });
     };
 
@@ -50,7 +50,8 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
           organisation.set('id', data[x]._id);
           this.get('organisations').add(organisation);
         }
-        return this.trigger('change:organisations');
+        this.trigger('change:organisations');
+        return this.trigger('initialized');
       }
     };
 
@@ -59,16 +60,18 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       console.log(data);
       len = data.length - 1;
       if (len >= 0) {
-        return this.get('organisations').get(data[0]._orga).restore(data);
+        this.get('organisations').get(data[0]._orga).restore(data);
+        return this.set('orgChoose', data[0]._orga);
       }
     };
 
     App.prototype.restoreSlides = function(data) {
       var len;
-      console.log(data);
+      console.log("data:", data);
       len = data.length - 1;
       if (len >= 0) {
-        return this.get('organisation').get('conference').restore(data);
+        this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(data[0]._conf).restore(data);
+        return this.set('confChoosed', data[0]._conf);
       }
     };
 

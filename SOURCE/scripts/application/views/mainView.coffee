@@ -23,10 +23,13 @@ define [
           @trigger 'organisationChoosed', txt###
 
 
-        $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
+        ### $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
           txt = $(e.target).attr('id')
           @model.get('organisation').conferenceChoosed txt
-          @trigger 'conferenceChoosed', txt
+          @trigger 'conferenceChoosed', txt###
+
+        
+        Backbone.history.navigate('home', trigger:true)
 
         $('#suivant').click (e)=>
           e.preventDefault()
@@ -35,6 +38,8 @@ define [
         $('#precedent').click (e)=>
           e.preventDefault()
           @model.trigger "previous"
+
+        
 
 
       connectNotif : (data)->
@@ -56,6 +61,7 @@ define [
           organisationView = new OrganisationView ({model:organisation})
           $('.dropdown-menu').append(organisationView.render().el)
         $('.emissions').text $('#all-shows').text()
+
 
         $("#loading").fadeOut()
         $("#wrap").fadeIn()

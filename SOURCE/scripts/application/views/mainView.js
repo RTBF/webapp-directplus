@@ -29,11 +29,14 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
         @trigger 'organisationChoosed', txt
       */
 
-      $('#appcontainer').delegate('.conf-item', 'click ', function(e) {
-        var txt;
-        txt = $(e.target).attr('id');
-        _this.model.get('organisation').conferenceChoosed(txt);
-        return _this.trigger('conferenceChoosed', txt);
+      /* $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
+        txt = $(e.target).attr('id')
+        @model.get('organisation').conferenceChoosed txt
+        @trigger 'conferenceChoosed', txt
+      */
+
+      Backbone.history.navigate('home', {
+        trigger: true
       });
       $('#suivant').click(function(e) {
         e.preventDefault();

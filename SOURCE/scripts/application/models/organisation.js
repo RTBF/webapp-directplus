@@ -26,13 +26,15 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
     };
 
     Organisation.prototype.restore = function(data) {
-      var conference, len, x, _i;
+      var conference, date, len, x, _i;
       this.get('conferencesC').reset();
       len = data.length - 1;
       for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
         conference = new Conference(data[x]);
         conference.set('id', data[x]._id);
         conference.set('orgName', this.get('name'));
+        date = new Date(conference.get('date'));
+        conference.set('date', date.toLocaleString());
         this.get('conferencesC').add(conference);
       }
       return this.trigger('change:conferencesC');

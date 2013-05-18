@@ -24,10 +24,9 @@ requirejs.config
 require ['backbone', 'backbonels', 'jquery','application/models/application','bootstrap'],(Backbone,Backbonels,$,App,Bs) ->
 #require ['backbone','jquery','application/models/application', 'bootstrap'],(Backbone,$,Application) ->
   $ ()->
-    console.log "Alors?"
     App = new App()
 
-    App.init()
+    #App.init()
     console.log "launched"
 
 

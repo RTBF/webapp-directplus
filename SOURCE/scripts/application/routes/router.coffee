@@ -8,15 +8,14 @@ define [
       routes:
         'organisation': 'organisationScreen'
         'conference/:orgid': 'conferenceScreen'
-        'slide': 'slideScreen'
+        'slides/:confid': 'slideScreen'
         # default
         
         '*actions': 'organisationScreen'
 
-      constructor:() ->
+      constructor:(socket) ->
+        @socket=socket
         super @routes
-        
-        
 
       initialize:()->
         @trigger 'orgRoute'
@@ -25,14 +24,7 @@ define [
         @mainView = new MainView
           model:  @app  
 
-        @mainView.on 'organisationChoosed', (data)=>
-          console.log 'router organisation choosed: ', data
-          @trigger 'confRoute', data
-
-        @mainView.on 'conferenceChoosed', (data)=>
-          console.log 'router conference choosed: ', data
-          @trigger 'slideRoute', data
-               
+        
         # Tell backbone to take care of the url navigation and history
         Backbone.history.start() #pushState: true
     
@@ -45,18 +37,23 @@ define [
             
 
       conferenceScreen: (orgid)->
+        console.log "emmission choosed"
         #@navigate '//lol', trigger:true
-        $('.slides').fadeOut()
+
         ###$('.organisationsBlock').removeClass('onshow')
         $('.confBlock').show ()->
           $('.confBlock').addClass('onshow')###
-        @trigger 'confRoute', orgid
+        @socket.emit 'organisationChoosed', orgid
+        ###@trigger 'confRoute', orgid
+        $('.slides').fadeOut ()->
+          $('.confBlock').fadeIn()###
           
 
-      slideScreen: ()->
-        $('.organisationsBlock').removeClass('onshow')
+      slideScreen: (confid)->
+        @trigger 'slideRoute', confid
         $('.confBlock').fadeOut ()->
           $('.slides').fadeIn()
+
           
         
         
