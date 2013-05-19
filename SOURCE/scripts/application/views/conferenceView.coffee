@@ -18,6 +18,7 @@ define [
       initialize : ()->
        @listenTo @model, 'change:slidesC', @render
        @listenTo @model, 'new', @new
+       @listenTo @model, 'addConf', @renderAdd
       
 
       render: ()-> 
@@ -52,6 +53,9 @@ define [
         href =  '/slides/'+orgid+'/'+confid
         $(".slide").remove()
         Backbone.history.navigate(href, trigger:true)
+
+      renderAdd:()->
+        
 
 
 

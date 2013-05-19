@@ -53,6 +53,10 @@ define(['application/config', 'application/views/mainView', 'application/models/
         console.log("app confList received", data);
         return _this.app.trigger('conferences', data);
       });
+      this.socket.on('allconferences', function(data) {
+        console.log("app allconfList received", data);
+        return _this.app.trigger('allconferences', data);
+      });
       this.socket.on('slides', function(data) {
         console.log('app slides received', data);
         return _this.app.trigger('slides', data);
@@ -96,6 +100,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
         }, 100);
       }
       if (this.app.get('organisations').isEmpty() === false) {
+        this.app.trigger('home');
         this.connect();
         return $('.slides').fadeOut(function() {
           return $('.confBlock').fadeIn();
@@ -105,6 +110,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
 
     Application.prototype.confScreen = function(orgid) {
       var _this = this;
+      this.app.set('orgChoose', orgid);
       console.log("emmission choosed");
       if (this.app.get('organisations').isEmpty()) {
         setTimeout(function() {
@@ -122,6 +128,8 @@ define(['application/config', 'application/views/mainView', 'application/models/
 
     Application.prototype.slScreen = function(orgid, confid) {
       var _this = this;
+      this.app.set('orgChoose', orgid);
+      this.app.set('confChoose', confid);
       if (this.app.get('organisations').isEmpty()) {
         setTimeout(function() {
           return _this.slScreen(orgid, confid);

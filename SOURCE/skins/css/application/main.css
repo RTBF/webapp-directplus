@@ -382,6 +382,17 @@ margin-left:10%;
   .slide.current {
     margin-left: -325px;
   }
+  .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
+  width: 100%;
+}
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
+  width: 100%;
+}
+
+.container{
+  width: 100%;
+}
+
 }
 
 @media (min-width: 768px) and (max-width: 979px) { 

@@ -16,6 +16,8 @@ define [
           @restore(data)
         @on 'conferences', (data)->
           @restoreConf data
+        @on 'allconferences', (data)->
+          @restoreAllConf data
         @on 'slides', (data)->
           @restoreSlides data
         @on 'newSlide', (data)->
@@ -37,17 +39,26 @@ define [
             organisation.set 'id', data[x]._id
             @get('organisations').add organisation
           @trigger 'change:organisations'
-          @trigger 'initialized'
+          
         
+
+      restoreAllConf : (data)->
+        
+        len = data.length - 1
+        @get('organisations').each (org)=>
+          org.get('conferencesC').reset()
+        if len>=0
+          for conf in data
+            console.log conf
+            @get('organisations').get(conf._orga).addConf conf
+            
 
       restoreConf : (data)->
         console.log data
         len = data.length - 1
-
         if len>=0
           @get('organisations').get(data[0]._orga).restore data
-          @set('orgChoose', data[0]._orga)
-
+          
 
       restoreSlides : (data)->
         console.log "data:", data

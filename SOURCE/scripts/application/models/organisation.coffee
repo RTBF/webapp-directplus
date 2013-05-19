@@ -37,6 +37,16 @@ define [
       conferenceChoosed:(id)->
         confsFound = @get('conferencesC').where _id:id
         @set 'conference', confsFound[0]
+
+      addConf:(conf)->
+        conference = new Conference conf
+        conference.set 'id', conf._id
+        conference.set 'orgName', @get 'name'
+        date= new Date conference.get('date')
+        conference.set 'date', date.toLocaleString()
+        @get('conferencesC').add conference
+        @trigger 'addConf', conf._id
+
         
      
 

@@ -19,6 +19,7 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
     mainView.prototype.initialize = function() {
       var _this = this;
       this.listenTo(this.model, 'change:organisations', this.render);
+      this.listenTo(this.model, 'home', this.emptyConfs);
       this.on('ServerConnection', function(data) {
         console.log("mainV connected");
         return _this.connectNotif(data);
@@ -76,6 +77,10 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
       $('.emissions').text($('#all-shows').text());
       $("#loading").fadeOut();
       return $("#wrap").fadeIn();
+    };
+
+    mainView.prototype.emptyConfs = function() {
+      return $('.conference').remove();
     };
 
     return mainView;

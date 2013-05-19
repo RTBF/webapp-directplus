@@ -5,13 +5,7 @@ define [
   'application/models/app'
   ],($,Backbone,MainView,App)->
     class Router extends Backbone.Router
-      routes:
-        'organisation': 'organisationScreen'
-        'conference/:orgid': 'conferenceScreen'
-        'slides/:confid': 'slideScreen'
-        # default
-        
-        '*actions': 'organisationScreen'
+      
 
       constructor:(socket) ->
         @socket=socket

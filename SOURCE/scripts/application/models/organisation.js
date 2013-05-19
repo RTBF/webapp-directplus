@@ -48,6 +48,17 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
       return this.set('conference', confsFound[0]);
     };
 
+    Organisation.prototype.addConf = function(conf) {
+      var conference, date;
+      conference = new Conference(conf);
+      conference.set('id', conf._id);
+      conference.set('orgName', this.get('name'));
+      date = new Date(conference.get('date'));
+      conference.set('date', date.toLocaleString());
+      this.get('conferencesC').add(conference);
+      return this.trigger('addConf', conf._id);
+    };
+
     return Organisation;
 
   })(Backbone.Model);

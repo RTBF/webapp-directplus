@@ -23,7 +23,11 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
     OrganisationView.prototype.template = _.template($('#Organisation-template').html());
 
     OrganisationView.prototype.initialize = function() {
-      return this.listenTo(this.model, 'change:conferencesC', this.renderConfList);
+      var _this = this;
+      this.listenTo(this.model, 'change:conferencesC', this.renderConfList);
+      return this.listenTo(this.model, 'addConf', function(id) {
+        return _this.renderAdd(id);
+      });
     };
 
     OrganisationView.prototype.render = function() {
@@ -52,6 +56,17 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
       return Backbone.history.navigate(href, {
         trigger: true
       });
+    };
+
+    OrganisationView.prototype.renderAdd = function(id) {
+      var conference, conferenceView;
+      console.log(id);
+      conference = this.model.get('conferencesC').get(id);
+      conferenceView = new ConferenceView({
+        model: conference
+      });
+      $('.conferenceList').append(conferenceView.render().el);
+      return this;
     };
 
     return OrganisationView;

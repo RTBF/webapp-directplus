@@ -52,6 +52,11 @@ define [
         @app.trigger 'conferences', data
     
 
+      @socket.on 'allconferences', (data)=>
+        console.log "app allconfList received", data
+        @app.trigger 'allconferences', data
+    
+
       @socket.on 'slides', (data)=>
         console.log 'app slides received', data
         @app.trigger 'slides', data
@@ -98,12 +103,14 @@ define [
         ,
         100
       if @app.get('organisations').isEmpty() is false 
+        @app.trigger 'home'
         @connect()
         $('.slides').fadeOut ()->
           $('.confBlock').fadeIn()
           
 
     confScreen: (orgid)->
+      @app.set 'orgChoose', orgid
       console.log "emmission choosed"
       if @app.get('organisations').isEmpty()
         setTimeout ()=>
@@ -118,6 +125,8 @@ define [
         
 
     slScreen: ( orgid , confid)=>
+      @app.set 'orgChoose', orgid
+      @app.set 'confChoose', confid
       #@trigger 'slideRoute', confid
       if @app.get('organisations').isEmpty()
         setTimeout ()=>

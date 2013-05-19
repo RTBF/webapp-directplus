@@ -19,6 +19,8 @@ define [
 
       initialize : ()->
         @listenTo @model, 'change:conferencesC', @renderConfList
+        @listenTo @model, 'addConf', (id)=>
+          @renderAdd id
        
 
       render: ()-> 
@@ -38,5 +40,13 @@ define [
         console.log href
         $('.conference').remove()
         Backbone.history.navigate(href, trigger:true)
+
+      renderAdd:(id)->
+        console.log id
+        conference = @model.get('conferencesC').get(id)
+        conferenceView = new ConferenceView {model:conference}
+        $('.conferenceList').append(conferenceView.render().el)
+        @
+
 
 

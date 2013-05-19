@@ -13,6 +13,7 @@ define [
 
       initialize : ()->
         @listenTo @model, 'change:organisations', @render
+        @listenTo @model, 'home', @emptyConfs
         @on 'ServerConnection', (data)=>
           console.log "mainV connected"
           @connectNotif(data)
@@ -65,4 +66,7 @@ define [
 
         $("#loading").fadeOut()
         $("#wrap").fadeIn()
+
+      emptyConfs:()->
+        $('.conference').remove()
         

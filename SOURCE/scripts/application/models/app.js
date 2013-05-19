@@ -23,6 +23,9 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       this.on('conferences', function(data) {
         return this.restoreConf(data);
       });
+      this.on('allconferences', function(data) {
+        return this.restoreAllConf(data);
+      });
       this.on('slides', function(data) {
         return this.restoreSlides(data);
       });
@@ -50,8 +53,25 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
           organisation.set('id', data[x]._id);
           this.get('organisations').add(organisation);
         }
-        this.trigger('change:organisations');
-        return this.trigger('initialized');
+        return this.trigger('change:organisations');
+      }
+    };
+
+    App.prototype.restoreAllConf = function(data) {
+      var conf, len, _i, _len, _results,
+        _this = this;
+      len = data.length - 1;
+      this.get('organisations').each(function(org) {
+        return org.get('conferencesC').reset();
+      });
+      if (len >= 0) {
+        _results = [];
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          conf = data[_i];
+          console.log(conf);
+          _results.push(this.get('organisations').get(conf._orga).addConf(conf));
+        }
+        return _results;
       }
     };
 
@@ -60,8 +80,7 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       console.log(data);
       len = data.length - 1;
       if (len >= 0) {
-        this.get('organisations').get(data[0]._orga).restore(data);
-        return this.set('orgChoose', data[0]._orga);
+        return this.get('organisations').get(data[0]._orga).restore(data);
       }
     };
 
