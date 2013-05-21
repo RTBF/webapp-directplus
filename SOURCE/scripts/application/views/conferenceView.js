@@ -30,6 +30,8 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
     ConferenceView.prototype.render = function() {
       console.log("confView");
       this.$el.html(this.template(this.model.toJSON()));
+      console.log(this.model.toJSON());
+      this.setCountDown();
       $('#SlideList').children().remove();
       if ($('#SlideList').is(':empty')) {
         this.model.get('slidesC').each(function(slide) {
@@ -73,6 +75,44 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
       return Backbone.history.navigate(href, {
         trigger: true
       });
+    };
+
+    ConferenceView.prototype.setCountDown = function() {
+      var directDate, intervalmilliseconde, timer, today,
+        _this = this;
+      timer = '#' + this.model.get('id') + ' .timer';
+      directDate = new Date(this.model.get('date'));
+      today = new Date();
+      intervalmilliseconde = directDate.getTime() - today.getTime();
+      if (intervalmilliseconde > 0) {
+        $(timer).text(this.getIntervalTimer(intervalmilliseconde));
+        return setTimeout(function() {
+          return _this.setCountDown();
+        }, 998);
+      } else {
+        console.log($(timer).html());
+        if (typeof ($(timer).html()) === 'undefined') {
+          console.log("so what");
+          return setTimeout(function() {
+            return _this.setCountDown();
+          }, 998);
+        } else {
+          return $(timer).text("REVOIR");
+        }
+      }
+    };
+
+    ConferenceView.prototype.getIntervalTimer = function(intervalmilliseconde) {
+      var day, hours, interval, minutes, secondes;
+      day = parseInt(intervalmilliseconde / (1000 * 60 * 60 * 24));
+      intervalmilliseconde = intervalmilliseconde - (day * 1000 * 60 * 60 * 24);
+      hours = parseInt(intervalmilliseconde / (1000 * 60 * 60));
+      intervalmilliseconde = intervalmilliseconde - (hours * 1000 * 60 * 60);
+      minutes = parseInt(intervalmilliseconde / (1000 * 60));
+      intervalmilliseconde = intervalmilliseconde - (minutes * 1000 * 60);
+      secondes = parseInt(intervalmilliseconde / 1000.);
+      interval = day + " DAYS " + hours + ":" + minutes + ":" + secondes;
+      return interval;
     };
 
     return ConferenceView;

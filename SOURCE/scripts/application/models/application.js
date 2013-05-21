@@ -15,13 +15,15 @@ define(['application/config', 'application/views/mainView', 'application/models/
 
     Application.prototype.routes = {
       'home': 'homeScreen',
-      'conference/:orgid': 'conferenceScreen',
+      'all/:page': 'allScreen',
+      'conference/:orgid/:page': 'conferenceScreen',
       'slides/:orgid/:confid': 'slideScreen',
       '*actions': 'homeScreen'
     };
 
     function Application() {
       this.slScreen = __bind(this.slScreen, this);
+      this.HaveFirstLoad = false;
       Application.__super__.constructor.call(this, this.routes);
     }
 
@@ -57,6 +59,9 @@ define(['application/config', 'application/views/mainView', 'application/models/
         console.log("app allconfList received", data);
         return _this.app.trigger('allconferences', data);
       });
+      this.socket.on('allNextPage', function(data, page) {
+        return _this.app.trigger('allNextPage', data, page);
+      });
       this.socket.on('slides', function(data) {
         console.log('app slides received', data);
         return _this.app.trigger('slides', data);
@@ -80,11 +85,17 @@ define(['application/config', 'application/views/mainView', 'application/models/
         return _this.mainView.trigger('ServerConnection', data);
       });
       this.socket.emit('user', '');
-      this.on('route:conferenceScreen', function(orgid) {
-        return _this.confScreen(orgid);
+      this.on('route:conferenceScreen', function(orgid, page) {
+        console.log("la page:", page);
+        return _this.confScreen(orgid, page);
       });
       this.on('route:homeScreen', function() {
-        return _this.orgScreen();
+        console.log("what?");
+        return _this.orgScreen(1);
+      });
+      this.on('route:allScreen', function(page) {
+        console.log("la page:", page);
+        return _this.orgScreen(page);
       });
       this.on('route:slideScreen', function(orgid, confid) {
         return _this.slScreen(orgid, confid);
@@ -92,33 +103,66 @@ define(['application/config', 'application/views/mainView', 'application/models/
       return Backbone.history.start();
     };
 
-    Application.prototype.orgScreen = function() {
+    Application.prototype.orgScreen = function(page) {
       var _this = this;
+      page = parseInt(page);
+      console.log("hello: ", page);
+      this.app.set('orgChoose', ' ');
+      this.app.set('confChoose', ' ');
       if (this.app.get('organisations').isEmpty()) {
         setTimeout(function() {
-          return _this.orgScreen();
+          return _this.orgScreen(page);
         }, 100);
       }
       if (this.app.get('organisations').isEmpty() === false) {
-        this.app.trigger('home');
-        this.connect();
+        if (page === 1) {
+          this.HaveFirstLoad = true;
+          this.app.trigger('home');
+          this.socket.emit('allConfs', page);
+        } else {
+          if (this.HaveFirstLoad === false) {
+            this.app.trigger('home');
+            this.loadPageOneByOne(1, page);
+          } else {
+            this.socket.emit('allConfs', page);
+          }
+        }
         return $('.slides').fadeOut(function() {
           return $('.confBlock').fadeIn();
         });
       }
     };
 
-    Application.prototype.confScreen = function(orgid) {
+    Application.prototype.loadPageOneByOne = function(first, end) {
       var _this = this;
+      console.log('first: ', first);
+      if (first <= end) {
+        if (this.app.loaded) {
+          this.socket.emit('allConfs', first);
+          this.app.loaded = false;
+          first = first + 1;
+        }
+        return setTimeout(function() {
+          return _this.loadPageOneByOne(first, end);
+        }, 100);
+      }
+    };
+
+    Application.prototype.confScreen = function(orgid, page) {
+      var _this = this;
+      this.HaveFirstLoad = false;
+      console.log(page);
       this.app.set('orgChoose', orgid);
+      this.app.set('confChoose', ' ');
       console.log("emmission choosed");
       if (this.app.get('organisations').isEmpty()) {
         setTimeout(function() {
-          return _this.confScreen(orgid);
+          return _this.confScreen(orgid, page);
         }, 100);
       }
       if (this.app.get('organisations').isEmpty() === false) {
-        this.socket.emit('organisationChoosed', orgid);
+        console.log("got to emit page:", page);
+        this.socket.emit('organisationChoosed', orgid, page);
         this.orgChoose = true;
         return $('.slides').fadeOut(function() {
           return $('.confBlock').fadeIn();
@@ -128,6 +172,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
 
     Application.prototype.slScreen = function(orgid, confid) {
       var _this = this;
+      this.HaveFirstLoad = false;
       this.app.set('orgChoose', orgid);
       this.app.set('confChoose', confid);
       if (this.app.get('organisations').isEmpty()) {
@@ -136,9 +181,9 @@ define(['application/config', 'application/views/mainView', 'application/models/
         }, 100);
       }
       if (this.app.get('organisations').isEmpty() === false) {
-        if (typeof this.orgChoose === 'undefined') {
+        if (typeof this.orgChoosed === 'undefined') {
           this.socket.emit('organisationChoosed', orgid);
-          this.orgChoose = true;
+          this.orgChoosed = true;
         }
         if (typeof this.app.get('organisations').get(orgid) === 'undefined') {
           console.log('get org id est indefini');
@@ -157,8 +202,9 @@ define(['application/config', 'application/views/mainView', 'application/models/
           if (this.app.get('organisations').get(orgid).get('conferencesC').isEmpty() === false) {
             console.log("je suis là");
             this.socket.emit('conferenceChoosed', confid);
-            $('.confBlock').fadeOut(function() {});
-            return $('.slides').fadeIn();
+            return $('.confBlock').fadeOut(function() {
+              return $('.slides').fadeIn();
+            });
           }
         }
       }

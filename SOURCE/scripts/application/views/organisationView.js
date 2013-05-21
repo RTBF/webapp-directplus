@@ -50,7 +50,7 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
     OrganisationView.prototype.choose = function(ev) {
       var href, id;
       id = this.model.get('id');
-      href = '/conference/' + id;
+      href = '/conference/' + id + '/' + 1;
       console.log(href);
       $('.conference').remove();
       return Backbone.history.navigate(href, {
@@ -65,6 +65,7 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
       conferenceView = new ConferenceView({
         model: conference
       });
+      console.log("confView: ", conferenceView);
       $('.conferenceList').append(conferenceView.render().el);
       return this;
     };

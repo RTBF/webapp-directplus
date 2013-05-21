@@ -56,7 +56,7 @@
 
 
       <div class=" container confBlock ">
-            <div class="dropdown">
+            <div class="container dropdown ">
                <a class="dropdown-toggle btn btn-inverse btn-large container "  data-toggle="dropdown" href="#">
                 <span class="emissions" >Dropdown</span>
                  
@@ -84,17 +84,20 @@
                         <button id="suivant" class="right carousel-control">›</button>
 
                       </div>
+                      <button id="nextpage">next</button>
     </div>
 
 
 
-    <div id="footer">
+
+   <!-- <div id="footer">
       <div class="navbar navbar-fixed-bottom">
         <p class="muted credit">RTBF.be 2013</p>
       </div>
     </div>
 
-  </div>
+  </div>-->
+
   
   <script type="text/template" id="app-template"> 
  
@@ -107,24 +110,28 @@
       <div class="span2"><i class="icon-chevron-right"></i></div>
     </div>
  </script>-->
-<br/>
+
 <script type="text/template" id="conf-template"> 
     <div class="row-fluid conf-item" id="<%- _id %>">
-      <div class="span3">
+      <div class="span3 tumb">
          <div class="thumbnail">
-        <img  alt="150x100" data-src="holder.js/300x200" style="width: 150px; height: 100px;" src="<%-tumb%>">
+        <img  alt="direct-plus" data-src="holder.js/300x200"  src="<%-tumb%>">
         </div>
       </div>
 
-      <div class="span7">
-      <p><%- date %><br/>
+      <div class="span7 description">
+      <p><%- datestring %><br/>
       <strong ><%- orgName%> :
       <%- name%><br/></strong>
       <%- description %></p>
       </div>
 
-      <div class="span2">
-      <i class="icon-chevron-right"></i>
+      <div class="span2 play">
+      <div class="thumbnail">
+        <img   data-src="holder.js/300x200" style="width: 50px; height: 50px;" src="http://projet.local.rtbf.be/RTBF/webapp-directplus/SOURCE/skins/images/pictosplay.png">
+        <div class="caption">
+        <p><strong class="timer">Load...</strong></p>
+    </div>
       </div>
 
     </div>

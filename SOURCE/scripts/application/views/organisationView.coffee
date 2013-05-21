@@ -36,7 +36,7 @@ define [
 
       choose:(ev)->
         id = @model.get 'id'
-        href =  '/conference/' + id
+        href =  '/conference/' + id+'/'+1
         console.log href
         $('.conference').remove()
         Backbone.history.navigate(href, trigger:true)
@@ -45,6 +45,7 @@ define [
         console.log id
         conference = @model.get('conferencesC').get(id)
         conferenceView = new ConferenceView {model:conference}
+        console.log "confView: ", conferenceView
         $('.conferenceList').append(conferenceView.render().el)
         @
 

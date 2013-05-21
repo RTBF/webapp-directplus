@@ -18,10 +18,10 @@ define [
           console.log "mainV connected"
           @connectNotif(data)
 
-        ###$('#appcontainer').delegate '.org-item', 'click', (e)=>
-          txt = $(e.target).attr('id')
-          @model.organisationChoosed txt
-          @trigger 'organisationChoosed', txt###
+
+        $('#appcontainer').delegate '#nextpage', 'click', (e)=>
+          @nextPage()
+          
 
 
         ### $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
@@ -29,8 +29,8 @@ define [
           @model.get('organisation').conferenceChoosed txt
           @trigger 'conferenceChoosed', txt###
 
-        
-        Backbone.history.navigate('home', trigger:true)
+        #href= 'home/'+1
+        #Backbone.history.navigate(href, trigger:true)
 
         $('#suivant').click (e)=>
           e.preventDefault()
@@ -68,5 +68,31 @@ define [
         $("#wrap").fadeIn()
 
       emptyConfs:()->
+        console.log "got to empty home"
         $('.conference').remove()
+
+      nextPage:()->
+        if typeof@model.get('orgChoose') is 'undefined' 
+          page = @model.get 'page'
+          page = page+1
+          href = 'all/'+ @page
+          Backbone.history.navigate(href, trigger:true)
+          console.log  'nextPage'
+        else
+          if  @model.get('orgChoose') is ' '
+            page = @model.get 'page'
+            page = page+1
+            href = 'all/'+ page
+            Backbone.history.navigate(href, trigger:true)
+            console.log  href
+          else 
+            page = @model.get('organisations').get(@model.get('orgChoose')).get('page')
+            page = page+1
+            orgid = @model.get('orgChoose')
+            href = 'conference/'+orgid+'/'+page
+            Backbone.history.navigate(href, trigger:true)
+            console.log href
+            
+
+        
         

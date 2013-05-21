@@ -13,13 +13,15 @@ define [
     
     routes:
         'home': 'homeScreen'
-        'conference/:orgid': 'conferenceScreen'
+        'all/:page': 'allScreen'
+        'conference/:orgid/:page': 'conferenceScreen'
         'slides/:orgid/:confid': 'slideScreen'
         # default
         
         '*actions': 'homeScreen'
 
     constructor:() ->
+      @HaveFirstLoad=false
       super @routes
       #
 
@@ -56,6 +58,8 @@ define [
         console.log "app allconfList received", data
         @app.trigger 'allconferences', data
     
+      @socket.on 'allNextPage', (data, page)=>
+        @app.trigger 'allNextPage', data, page
 
       @socket.on 'slides', (data)=>
         console.log 'app slides received', data
@@ -83,10 +87,17 @@ define [
 
       @socket.emit 'user', ''
 
-      @on 'route:conferenceScreen',(orgid)=> 
-        @confScreen orgid
+      @on 'route:conferenceScreen',(orgid,page)=> 
+        console.log "la page:", page
+        @confScreen orgid, page
+      
       @on 'route:homeScreen',()=>
-        @orgScreen()
+        console.log "what?"
+        @orgScreen(1)
+
+      @on 'route:allScreen',(page)=>
+        console.log "la page:", page
+        @orgScreen(page)
 
       @on 'route:slideScreen', (orgid, confid)=>
         @slScreen(orgid, confid)
@@ -96,35 +107,63 @@ define [
       Backbone.history.start()
 
       
-    orgScreen:()->
+    orgScreen:(page)->
+      page = parseInt page
+      console.log "hello: ", page
+      @app.set 'orgChoose', ' '
+      @app.set 'confChoose', ' '
       if @app.get('organisations').isEmpty()
         setTimeout ()=>
-          @orgScreen()
+          @orgScreen(page)
         ,
         100
       if @app.get('organisations').isEmpty() is false 
-        @app.trigger 'home'
-        @connect()
+        if page is 1
+          @HaveFirstLoad=true
+          @app.trigger 'home'
+          @socket.emit 'allConfs', page
+        else
+          if @HaveFirstLoad is false
+            @app.trigger 'home'
+            @loadPageOneByOne(1, page)
+          else
+            @socket.emit 'allConfs', page
         $('.slides').fadeOut ()->
           $('.confBlock').fadeIn()
-          
 
-    confScreen: (orgid)->
+    loadPageOneByOne:(first, end)->
+      console.log 'first: ', first
+      if first<=end
+        if @app.loaded
+          @socket.emit 'allConfs', first
+          @app.loaded = false
+          first= first+1
+        setTimeout ()=>
+          @loadPageOneByOne first, end
+        ,
+          100
+
+    confScreen: (orgid,page)->
+      @HaveFirstLoad=false
+      console.log page
       @app.set 'orgChoose', orgid
+      @app.set 'confChoose', ' '
       console.log "emmission choosed"
       if @app.get('organisations').isEmpty()
         setTimeout ()=>
-          @confScreen(orgid)
+          @confScreen(orgid, page)
         ,
         100
       if @app.get('organisations').isEmpty() is false 
-        @socket.emit 'organisationChoosed', orgid
+        console.log "got to emit page:", page
+        @socket.emit 'organisationChoosed', orgid, page
         @orgChoose = true
         $('.slides').fadeOut ()->
           $('.confBlock').fadeIn()
         
 
     slScreen: ( orgid , confid)=>
+      @HaveFirstLoad=false
       @app.set 'orgChoose', orgid
       @app.set 'confChoose', confid
       #@trigger 'slideRoute', confid
@@ -136,10 +175,10 @@ define [
 
       if @app.get('organisations').isEmpty() is false 
 
-        if typeof@orgChoose is 'undefined'
+        if typeof@orgChoosed is 'undefined'
 
           @socket.emit 'organisationChoosed', orgid
-          @orgChoose = true
+          @orgChoosed = true
 
         if typeof@app.get('organisations').get(orgid) is 'undefined'
           console.log 'get org id est indefini'
@@ -161,7 +200,7 @@ define [
             console.log "je suis là"
             @socket.emit 'conferenceChoosed', confid
             $('.confBlock').fadeOut ()->
-            $('.slides').fadeIn()
+              $('.slides').fadeIn()
 
     connect: () -> 
       @socket.emit 'allConfs', ''

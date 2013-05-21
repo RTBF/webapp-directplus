@@ -11,6 +11,7 @@ define [
         name: ' '
         tumb: ' '
         description: ' '
+        page:1
         conferencesC: new Conferences()
 
      
@@ -30,7 +31,7 @@ define [
           conference.set 'id', data[x]._id
           conference.set 'orgName', @get 'name'
           date= new Date conference.get('date')
-          conference.set 'date', date.toLocaleString()
+          conference.set 'datestring', date.toLocaleString()
           @get('conferencesC').add conference
         @trigger 'change:conferencesC'
 
@@ -43,8 +44,9 @@ define [
         conference.set 'id', conf._id
         conference.set 'orgName', @get 'name'
         date= new Date conference.get('date')
-        conference.set 'date', date.toLocaleString()
+        conference.set 'datestring', date.toLocaleString()
         @get('conferencesC').add conference
+        console.log @get('conferencesC')
         @trigger 'addConf', conf._id
 
         

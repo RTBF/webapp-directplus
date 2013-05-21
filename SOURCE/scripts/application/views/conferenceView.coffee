@@ -15,15 +15,17 @@ define [
       events:
         'click .conf-item ':'choose'
 
+
       initialize : ()->
        @listenTo @model, 'change:slidesC', @render
        @listenTo @model, 'new', @new
-       @listenTo @model, 'addConf', @renderAdd
       
 
       render: ()-> 
         console.log "confView"
         @$el.html @template(@model.toJSON())
+        console.log @model.toJSON()
+        @setCountDown()
         $('#SlideList').children().remove()
         if $('#SlideList').is ':empty'
           @model.get('slidesC').each (slide)->
@@ -54,7 +56,43 @@ define [
         $(".slide").remove()
         Backbone.history.navigate(href, trigger:true)
 
-      renderAdd:()->
+      setCountDown:()->
+        timer= '#'+@model.get('id')+' .timer'
+        directDate = new Date @model.get('date')
+        today = new Date()
+        intervalmilliseconde = directDate.getTime()-today.getTime()
+        
+        if intervalmilliseconde > 0
+          $(timer).text(@getIntervalTimer(intervalmilliseconde))
+          setTimeout ()=>
+            @setCountDown()
+          ,
+            998
+        else
+          console.log $(timer).html()
+          if typeof($(timer).html()) is 'undefined'
+            console.log "so what"
+            setTimeout ()=>
+              @setCountDown()
+            ,
+              998
+          else
+            $(timer).text("REVOIR")
+
+      
+      getIntervalTimer:(intervalmilliseconde)->
+        day = parseInt intervalmilliseconde / (1000*60*60*24)
+        intervalmilliseconde = intervalmilliseconde - (day*1000*60*60*24)
+        hours = parseInt intervalmilliseconde / (1000*60*60)
+        intervalmilliseconde = intervalmilliseconde - (hours*1000*60*60)
+        minutes = parseInt intervalmilliseconde / (1000*60)
+        intervalmilliseconde = intervalmilliseconde - (minutes*1000*60)
+        secondes = parseInt intervalmilliseconde / (1000)
+
+        interval= day+" DAYS "+hours+":"+minutes+":"+secondes
+        interval
+
+
         
 
 

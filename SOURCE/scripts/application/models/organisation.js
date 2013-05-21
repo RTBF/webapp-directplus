@@ -12,6 +12,7 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
       name: ' ',
       tumb: ' ',
       description: ' ',
+      page: 1,
       conferencesC: new Conferences()
     };
 
@@ -34,7 +35,7 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
         conference.set('id', data[x]._id);
         conference.set('orgName', this.get('name'));
         date = new Date(conference.get('date'));
-        conference.set('date', date.toLocaleString());
+        conference.set('datestring', date.toLocaleString());
         this.get('conferencesC').add(conference);
       }
       return this.trigger('change:conferencesC');
@@ -54,8 +55,9 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
       conference.set('id', conf._id);
       conference.set('orgName', this.get('name'));
       date = new Date(conference.get('date'));
-      conference.set('date', date.toLocaleString());
+      conference.set('datestring', date.toLocaleString());
       this.get('conferencesC').add(conference);
+      console.log(this.get('conferencesC'));
       return this.trigger('addConf', conf._id);
     };
 

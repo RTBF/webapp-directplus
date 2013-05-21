@@ -13,10 +13,13 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
     }
 
     App.prototype.defaults = {
-      organisations: new Organisations()
+      organisations: new Organisations(),
+      page: 1
     };
 
     App.prototype.initialize = function() {
+      var _this = this;
+      this.loaded = true;
       this.on('organisations', function(data) {
         return this.restore(data);
       });
@@ -38,8 +41,11 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       this.on('previous', function() {
         return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('previous');
       });
-      return this.on('sremove', function(data) {
+      this.on('sremove', function(data) {
         return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('sremove', data);
+      });
+      return this.on('allNextPage', function(data, page) {
+        return _this.allNextPage(data, page);
       });
     };
 
@@ -58,21 +64,20 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
     };
 
     App.prototype.restoreAllConf = function(data) {
-      var conf, len, _i, _len, _results,
+      var conf, len, _i, _len,
         _this = this;
       len = data.length - 1;
       this.get('organisations').each(function(org) {
         return org.get('conferencesC').reset();
       });
       if (len >= 0) {
-        _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           conf = data[_i];
           console.log(conf);
-          _results.push(this.get('organisations').get(conf._orga).addConf(conf));
+          this.get('organisations').get(conf._orga).addConf(conf);
         }
-        return _results;
       }
+      return this.loaded = true;
     };
 
     App.prototype.restoreConf = function(data) {
@@ -101,6 +106,18 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       });
       console.log(organisationsFound[0]);
       return this.set('organisation', organisationsFound[0]);
+    };
+
+    App.prototype.allNextPage = function(data, page) {
+      var conf, newPage, _i, _len;
+      newPage = parseInt(page);
+      this.set('page', newPage);
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        conf = data[_i];
+        console.log(conf);
+        this.get('organisations').get(conf._orga).addConf(conf);
+      }
+      return this.loaded = true;
     };
 
     return App;

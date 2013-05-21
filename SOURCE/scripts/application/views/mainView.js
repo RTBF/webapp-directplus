@@ -24,21 +24,15 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
         console.log("mainV connected");
         return _this.connectNotif(data);
       });
-      /*$('#appcontainer').delegate '.org-item', 'click', (e)=>
-        txt = $(e.target).attr('id')
-        @model.organisationChoosed txt
-        @trigger 'organisationChoosed', txt
-      */
-
+      $('#appcontainer').delegate('#nextpage', 'click', function(e) {
+        return _this.nextPage();
+      });
       /* $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
         txt = $(e.target).attr('id')
         @model.get('organisation').conferenceChoosed txt
         @trigger 'conferenceChoosed', txt
       */
 
-      Backbone.history.navigate('home', {
-        trigger: true
-      });
       $('#suivant').click(function(e) {
         e.preventDefault();
         return _this.model.trigger("next");
@@ -80,7 +74,40 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
     };
 
     mainView.prototype.emptyConfs = function() {
+      console.log("got to empty home");
       return $('.conference').remove();
+    };
+
+    mainView.prototype.nextPage = function() {
+      var href, orgid, page;
+      if (typeof this.model.get('orgChoose') === 'undefined') {
+        page = this.model.get('page');
+        page = page + 1;
+        href = 'all/' + this.page;
+        Backbone.history.navigate(href, {
+          trigger: true
+        });
+        return console.log('nextPage');
+      } else {
+        if (this.model.get('orgChoose') === ' ') {
+          page = this.model.get('page');
+          page = page + 1;
+          href = 'all/' + page;
+          Backbone.history.navigate(href, {
+            trigger: true
+          });
+          return console.log(href);
+        } else {
+          page = this.model.get('organisations').get(this.model.get('orgChoose')).get('page');
+          page = page + 1;
+          orgid = this.model.get('orgChoose');
+          href = 'conference/' + orgid + '/' + page;
+          Backbone.history.navigate(href, {
+            trigger: true
+          });
+          return console.log(href);
+        }
+      }
     };
 
     return mainView;

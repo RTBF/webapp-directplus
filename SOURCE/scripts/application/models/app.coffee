@@ -9,8 +9,12 @@ define [
 
       defaults:
         organisations : new Organisations()
+        page: 1
+
 
       initialize : ()->
+
+        @loaded=true
 
         @on 'organisations', (data)->
           @restore(data)
@@ -28,6 +32,8 @@ define [
           @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'previous'
         @on 'sremove',(data)->
           @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'sremove', data
+        @on 'allNextPage', (data, page)=>
+          @allNextPage data, page
 
 
       restore:(data)->
@@ -39,7 +45,7 @@ define [
             organisation.set 'id', data[x]._id
             @get('organisations').add organisation
           @trigger 'change:organisations'
-          
+
         
 
       restoreAllConf : (data)->
@@ -51,6 +57,7 @@ define [
           for conf in data
             console.log conf
             @get('organisations').get(conf._orga).addConf conf
+        @loaded=true
             
 
       restoreConf : (data)->
@@ -72,6 +79,17 @@ define [
         organisationsFound = @get('organisations').where _id:id
         console.log organisationsFound[0]
         @set 'organisation', organisationsFound[0]
+
+      allNextPage:(data, page)->
+        newPage = parseInt page
+        @set 'page', newPage
+        for conf in data
+          console.log conf
+          @get('organisations').get(conf._orga).addConf conf
+
+        @loaded=true 
+          # ...
+        
 
 
 
