@@ -75,7 +75,7 @@ define [
         if typeof@model.get('orgChoose') is 'undefined' 
           page = @model.get 'page'
           page = page+1
-          href = 'all/'+ @page
+          href = 'all/'+ page
           Backbone.history.navigate(href, trigger:true)
           console.log  'nextPage'
         else

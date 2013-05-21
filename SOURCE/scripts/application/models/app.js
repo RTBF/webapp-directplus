@@ -44,8 +44,11 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       this.on('sremove', function(data) {
         return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('sremove', data);
       });
-      return this.on('allNextPage', function(data, page) {
+      this.on('allNextPage', function(data, page) {
         return _this.allNextPage(data, page);
+      });
+      return this.on('conferencesNextPage', function(data, page) {
+        return _this.conferencesNextPage(data, page);
       });
     };
 
@@ -85,7 +88,8 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       console.log(data);
       len = data.length - 1;
       if (len >= 0) {
-        return this.get('organisations').get(data[0]._orga).restore(data);
+        this.get('organisations').get(data[0]._orga).restore(data);
+        return this.get('organisations').get(data[0]._orga).loaded = true;
       }
     };
 
@@ -117,7 +121,24 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
         console.log(conf);
         this.get('organisations').get(conf._orga).addConf(conf);
       }
+      if (data.length > 0) {
+        this.set('page', newPage);
+      }
       return this.loaded = true;
+    };
+
+    App.prototype.conferencesNextPage = function(data, page) {
+      var conf, _i, _len;
+      page = parseInt(page);
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        conf = data[_i];
+        console.log(conf);
+        this.get('organisations').get(conf._orga).addConf(conf);
+      }
+      if (data.length > 0) {
+        this.get('organisations').get(data[0]._orga).set('page', page);
+      }
+      return this.get('organisations').get(this.get('orgChoose')).loaded = true;
     };
 
     return App;

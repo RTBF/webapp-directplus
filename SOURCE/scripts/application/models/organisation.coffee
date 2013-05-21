@@ -20,6 +20,7 @@ define [
          # ...
 
       initialize:()->
+        @loaded=true
         @on 'conferences', (data)->
           @restore data
 

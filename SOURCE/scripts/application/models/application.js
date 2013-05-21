@@ -24,6 +24,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
     function Application() {
       this.slScreen = __bind(this.slScreen, this);
       this.HaveFirstLoad = false;
+      this.HaveConfFirstLoad = false;
       Application.__super__.constructor.call(this, this.routes);
     }
 
@@ -61,6 +62,9 @@ define(['application/config', 'application/views/mainView', 'application/models/
       });
       this.socket.on('allNextPage', function(data, page) {
         return _this.app.trigger('allNextPage', data, page);
+      });
+      this.socket.on('conferencesNextPage', function(data, page) {
+        return _this.app.trigger('conferencesNextPage', data, page);
       });
       this.socket.on('slides', function(data) {
         console.log('app slides received', data);
@@ -103,8 +107,41 @@ define(['application/config', 'application/views/mainView', 'application/models/
       return Backbone.history.start();
     };
 
+    Application.prototype.loadPageOneByOne = function(first, end) {
+      var _this = this;
+      console.log('first: ', first);
+      if (first <= end) {
+        if (this.app.loaded) {
+          this.socket.emit('allConfs', first);
+          this.app.loaded = false;
+          first = first + 1;
+        }
+        return setTimeout(function() {
+          return _this.loadPageOneByOne(first, end);
+        }, 100);
+      }
+    };
+
+    Application.prototype.loadPageOneByOneConf = function(first, end, orgid) {
+      var _this = this;
+      console.log('first: ', first);
+      console.log('end: ', end);
+      console.log(this.app.get('organisations').get(this.app.get('orgChoose')).loaded);
+      if (first <= end) {
+        if (this.app.get('organisations').get(this.app.get('orgChoose')).loaded) {
+          this.socket.emit('organisationChoosed', orgid, first);
+          this.app.get('organisations').get(this.app.get('orgChoose')).loaded = false;
+          first = first + 1;
+        }
+        return setTimeout(function() {
+          return _this.loadPageOneByOneConf(first, end, orgid);
+        }, 100);
+      }
+    };
+
     Application.prototype.orgScreen = function(page) {
       var _this = this;
+      this.HaveConfFirstLoad = false;
       page = parseInt(page);
       console.log("hello: ", page);
       this.app.set('orgChoose', ' ');
@@ -133,25 +170,11 @@ define(['application/config', 'application/views/mainView', 'application/models/
       }
     };
 
-    Application.prototype.loadPageOneByOne = function(first, end) {
-      var _this = this;
-      console.log('first: ', first);
-      if (first <= end) {
-        if (this.app.loaded) {
-          this.socket.emit('allConfs', first);
-          this.app.loaded = false;
-          first = first + 1;
-        }
-        return setTimeout(function() {
-          return _this.loadPageOneByOne(first, end);
-        }, 100);
-      }
-    };
-
     Application.prototype.confScreen = function(orgid, page) {
       var _this = this;
       this.HaveFirstLoad = false;
       console.log(page);
+      page = parseInt(page);
       this.app.set('orgChoose', orgid);
       this.app.set('confChoose', ' ');
       console.log("emmission choosed");
@@ -161,8 +184,18 @@ define(['application/config', 'application/views/mainView', 'application/models/
         }, 100);
       }
       if (this.app.get('organisations').isEmpty() === false) {
-        console.log("got to emit page:", page);
-        this.socket.emit('organisationChoosed', orgid, page);
+        if (page === 1) {
+          this.HaveConfFirstLoad = true;
+          this.app.get('organisations').get(this.app.get('orgChoose')).trigger('empty');
+          this.socket.emit('organisationChoosed', orgid, page);
+        } else {
+          if (this.HaveConfFirstLoad === false) {
+            this.app.get('organisations').get(this.app.get('orgChoose')).trigger('empty');
+            this.loadPageOneByOneConf(1, page, orgid);
+          } else {
+            this.socket.emit('organisationChoosed', orgid, page);
+          }
+        }
         this.orgChoose = true;
         return $('.slides').fadeOut(function() {
           return $('.confBlock').fadeIn();
@@ -172,6 +205,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
 
     Application.prototype.slScreen = function(orgid, confid) {
       var _this = this;
+      this.HaveConfFirstLoad = false;
       this.HaveFirstLoad = false;
       this.app.set('orgChoose', orgid);
       this.app.set('confChoose', confid);

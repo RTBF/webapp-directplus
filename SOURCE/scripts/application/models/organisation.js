@@ -21,6 +21,7 @@ define(['jquery', 'backbone', 'application/models/conference', 'application/coll
     }
 
     Organisation.prototype.initialize = function() {
+      this.loaded = true;
       return this.on('conferences', function(data) {
         return this.restore(data);
       });

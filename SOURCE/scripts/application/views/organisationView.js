@@ -25,6 +25,7 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
     OrganisationView.prototype.initialize = function() {
       var _this = this;
       this.listenTo(this.model, 'change:conferencesC', this.renderConfList);
+      this.listenTo(this.model, 'empty', this.emptyConfs);
       return this.listenTo(this.model, 'addConf', function(id) {
         return _this.renderAdd(id);
       });
@@ -68,6 +69,11 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
       console.log("confView: ", conferenceView);
       $('.conferenceList').append(conferenceView.render().el);
       return this;
+    };
+
+    OrganisationView.prototype.emptyConfs = function() {
+      console.log("got to empty home");
+      return $('.conference').remove();
     };
 
     return OrganisationView;

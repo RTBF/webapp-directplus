@@ -83,7 +83,7 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
       if (typeof this.model.get('orgChoose') === 'undefined') {
         page = this.model.get('page');
         page = page + 1;
-        href = 'all/' + this.page;
+        href = 'all/' + page;
         Backbone.history.navigate(href, {
           trigger: true
         });

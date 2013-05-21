@@ -19,6 +19,7 @@ define [
 
       initialize : ()->
         @listenTo @model, 'change:conferencesC', @renderConfList
+        @listenTo @model, 'empty', @emptyConfs
         @listenTo @model, 'addConf', (id)=>
           @renderAdd id
        
@@ -48,6 +49,10 @@ define [
         console.log "confView: ", conferenceView
         $('.conferenceList').append(conferenceView.render().el)
         @
+
+      emptyConfs:()->
+        console.log "got to empty home"
+        $('.conference').remove()
 
 
 

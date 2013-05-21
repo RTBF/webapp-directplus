@@ -34,6 +34,9 @@ define [
           @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'sremove', data
         @on 'allNextPage', (data, page)=>
           @allNextPage data, page
+        @on 'conferencesNextPage', (data, page)=>
+          @conferencesNextPage data, page
+
 
 
       restore:(data)->
@@ -65,6 +68,7 @@ define [
         len = data.length - 1
         if len>=0
           @get('organisations').get(data[0]._orga).restore data
+          @get('organisations').get(data[0]._orga).loaded = true
           
 
       restoreSlides : (data)->
@@ -86,11 +90,21 @@ define [
         for conf in data
           console.log conf
           @get('organisations').get(conf._orga).addConf conf
+        if data.length > 0
+          @set 'page', newPage
 
         @loaded=true 
           # ...
+      conferencesNextPage:(data, page)->
+        page  = parseInt page
         
-
+        for conf in data
+          console.log conf
+          @get('organisations').get(conf._orga).addConf conf
+        if data.length > 0
+          @get('organisations').get(data[0]._orga).set 'page', page
+          
+        @get('organisations').get(@get('orgChoose')).loaded = true
 
 
      

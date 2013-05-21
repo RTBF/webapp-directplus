@@ -22,6 +22,7 @@ define [
 
     constructor:() ->
       @HaveFirstLoad=false
+      @HaveConfFirstLoad=false
       super @routes
       #
 
@@ -60,6 +61,11 @@ define [
     
       @socket.on 'allNextPage', (data, page)=>
         @app.trigger 'allNextPage', data, page
+
+      @socket.on 'conferencesNextPage', (data, page)=>
+        @app.trigger 'conferencesNextPage', data, page
+
+
 
       @socket.on 'slides', (data)=>
         console.log 'app slides received', data
@@ -107,7 +113,39 @@ define [
       Backbone.history.start()
 
       
+    
+
+    loadPageOneByOne:(first, end)->
+      console.log 'first: ', first
+
+      if first<=end
+        if @app.loaded
+          @socket.emit 'allConfs', first
+          @app.loaded = false
+          first= first+1
+        setTimeout ()=>
+          @loadPageOneByOne first, end
+        ,
+          100
+
+    loadPageOneByOneConf:(first, end, orgid)->
+      console.log 'first: ', first
+      console.log  'end: ', end
+      console.log @app.get('organisations').get(@app.get('orgChoose')).loaded
+      if first<=end
+        if @app.get('organisations').get(@app.get('orgChoose')).loaded
+          @socket.emit 'organisationChoosed', orgid, first
+          @app.get('organisations').get(@app.get('orgChoose')).loaded = false
+          first= first+1
+        setTimeout ()=>
+          @loadPageOneByOneConf first, end, orgid
+        ,
+          100
+
+
+
     orgScreen:(page)->
+      @HaveConfFirstLoad=false
       page = parseInt page
       console.log "hello: ", page
       @app.set 'orgChoose', ' '
@@ -131,21 +169,10 @@ define [
         $('.slides').fadeOut ()->
           $('.confBlock').fadeIn()
 
-    loadPageOneByOne:(first, end)->
-      console.log 'first: ', first
-      if first<=end
-        if @app.loaded
-          @socket.emit 'allConfs', first
-          @app.loaded = false
-          first= first+1
-        setTimeout ()=>
-          @loadPageOneByOne first, end
-        ,
-          100
-
     confScreen: (orgid,page)->
       @HaveFirstLoad=false
       console.log page
+      page = parseInt page
       @app.set 'orgChoose', orgid
       @app.set 'confChoose', ' '
       console.log "emmission choosed"
@@ -155,14 +182,23 @@ define [
         ,
         100
       if @app.get('organisations').isEmpty() is false 
-        console.log "got to emit page:", page
-        @socket.emit 'organisationChoosed', orgid, page
+        if page is 1
+          @HaveConfFirstLoad = true
+          @app.get('organisations').get(@app.get('orgChoose')).trigger 'empty'
+          @socket.emit 'organisationChoosed', orgid, page
+        else
+          if @HaveConfFirstLoad is false
+            @app.get('organisations').get(@app.get('orgChoose')).trigger 'empty'
+            @loadPageOneByOneConf(1, page, orgid)
+          else
+            @socket.emit 'organisationChoosed', orgid, page
         @orgChoose = true
         $('.slides').fadeOut ()->
           $('.confBlock').fadeIn()
         
 
     slScreen: ( orgid , confid)=>
+      @HaveConfFirstLoad=false
       @HaveFirstLoad=false
       @app.set 'orgChoose', orgid
       @app.set 'confChoose', confid
