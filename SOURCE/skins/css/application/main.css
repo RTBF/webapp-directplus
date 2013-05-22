@@ -173,12 +173,31 @@ margin-left:10%;
 .connect{
   /*float: right;*/
 }
+/**
+  Header section
+**/
 #header{
   position: absolute;
   width: 100%;
   top: 0px;
   z-index: 1;
+  background-color: rgba(0, 0, 0, 0.3); 
 }
+.emission-dropdown {
+  background-image: linear-gradient(to bottom, #444444, #222222);
+}
+.emission-dropdown > li > a {
+  color: white;
+  font-size: 17.5px;
+  
+}
+.emission-button {
+  text-align: center;
+}
+
+/**
+ Slide section
+**/
 
 .SlideList {
   height: 100%;
@@ -256,6 +275,10 @@ margin-left:10%;
   opacity: 1.0;
 }
 
+.slide.current section {
+  overflow: auto;
+}
+
 .slide.future {
   visibility: visible;
   display: block;
@@ -273,17 +296,7 @@ margin-left:10%;
   text-align: center;
 }
 
-.emission-dropdown {
-  background-image: linear-gradient(to bottom, #444444, #222222);
-}
-.emission-dropdown > li > a {
-  color: white;
-  font-size: 17.5px;
-  
-}
-.emission-button {
-  text-align: center;
-}
+
 
 .thumbnail .caption {
     text-align: center;
@@ -323,22 +336,27 @@ margin-left:10%;
 @media (max-width: 490px) { 
   .slide {
     width: 400px;
-    min-height: 200px;
+    height: 200px;
   }
   .slide.current {
     margin-left: -200px;
+  }
+  .slide.current section {
+    height: 200px
   }
 }
 
 @media (max-width: 767px) {
   .slide {
     width: 650px;
-    min-height: 450px;
+    height: 450px;
   }
   .slide.current {
     margin-left: -325px;
   }
-
+  .slide.current section {
+    height: 450px;
+  }
 }
 
 @media (max-width: 370px) {
@@ -349,24 +367,31 @@ margin-left:10%;
 @media (min-width: 768px) and (max-width: 979px) { 
   .slide {
     width: 800px;
-    min-height: 600px;
+    height: 600px;
   }
   .slide.current {
     margin-left: -400px;
   }
+  .slide.current section {
+    height: auto;
+  }
+
 }
 @media (min-width: 1200px) { 
   .slide {
     width: 1080px;
-    min-height: 500px;
+    height: 500px;
   }
   .slide.current {
     margin-left: -540px;
   }
-  .slide.past {
+  .slide.current section {
+    height: 500px;
+  }
 
-  margin-left: -1580px;
-}
+  .slide.past {
+    margin-left: -1580px;
+  }
 }  
 
 
