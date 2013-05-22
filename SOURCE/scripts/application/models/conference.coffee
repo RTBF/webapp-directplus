@@ -9,7 +9,7 @@ define [
 
       defaults:
         name: ' '
-        tumb: ' '
+        thumb: ' '
         description: ' '
         date: new Date()
         slidesC: new Slides()
