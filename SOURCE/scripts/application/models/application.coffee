@@ -218,7 +218,7 @@ define [
         
 
     slScreen: ( orgid , confid)=>
-
+      @app.allLoaded = false
       @HaveConfFirstLoad=false
       @HaveFirstLoad=false
       @app.set 'orgChoose', orgid

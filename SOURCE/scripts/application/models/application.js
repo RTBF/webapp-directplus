@@ -219,6 +219,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
 
     Application.prototype.slScreen = function(orgid, confid) {
       var _this = this;
+      this.app.allLoaded = false;
       this.HaveConfFirstLoad = false;
       this.HaveFirstLoad = false;
       this.app.set('orgChoose', orgid);
