@@ -59,8 +59,6 @@ margin-left:10%;
     padding-top: 41px;
 }
 
-
-
 .modal-body {
   background: -webkit-gradient(linear, left top, left bottom, from(#333), to(black));
   background: -moz-linear-gradient(top, #333, black);
@@ -161,17 +159,7 @@ margin-left:10%;
 .organisation i{
   float: right;
 }
-.navbar .brand{
-  /*float: right;*/
-  
-    float: right;
-    font-weight: bold;
-    margin-left: 20px;
-    padding-left: 0;
-    padding-right: 0;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.125);
-    transition: all 0.2s linear 0s;
-}
+
 .label{
   float: right;
 
@@ -187,51 +175,9 @@ margin-left:10%;
 }
 #header{
   position: absolute;
-  height: 100%;
   width: 100%;
-}
-/*content{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  left: 0px;
   top: 0px;
-  background: #000;
-  background: -webkit-gradient(linear, left top, left bottom, from(#333), to(black));
-  background: -moz-linear-gradient(top, #333, black);
-}
-
-.conference {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  left: 0px;
-  top: 0px;
-  display: block;
-  overflow: hidden;
-  background: #000;
-  background: -webkit-gradient(linear, left top, left bottom, from(#333), to(black));
-  background: -moz-linear-gradient(top, #333, black);
-}
-.conf {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10px 10px 10px 10px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
-  float: left;
-  margin: 30px;
-}*/
-.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
-  width: 80%;
-}
-.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
-  width: 80%;
-}
-
-.container{
-  width: 80%;
-}
-.nav.container{
-  width: 100%;
+  z-index: 1;
 }
 
 .SlideList {
@@ -326,45 +272,23 @@ margin-left:10%;
 .brand-center{
   text-align: center;
 }
-.navbar .nav .pull-right{
-  float:right; 
-  display:inline-block;
+
+.emission-dropdown {
+  background-image: linear-gradient(to bottom, #444444, #222222);
 }
-.navbar .nav li { 
-  display:inline-block;
+.emission-dropdown > li > a {
+  color: white;
+  font-size: 17.5px;
+  
+}
+.emission-button {
+  text-align: center;
 }
 
-.caret{
-  float: right;
-}
-.dropdown-menu {
-    border-radius: 0px 0px 6px 6px;
-    margin-left: 8%;
-    background-image: linear-gradient(to bottom, #444444, #222222);
-   /* position: relative;*/
-    width: 84%;
-  }
-.dropdown-menu > li > a {
-    color: white;
-}
 .thumbnail .caption {
     text-align: center;
 }
-.navbar .nav .pull-center { 
-    float:none; 
-    display:inline-block;
-    *display: inline; *zoom: 1; /*IE7 inline-block hack */
-    text-align: center;
-    width: auto;
-}
-.navbar .nav {
-    
-    text-align: center;
-}
-.dropup, .dropdown {
-    position: fixed;
-    text-align: center;
-}
+
 .thumb .thumbnail {
     border: medium none;
     border-radius: 0px 0px 0px 0px;
@@ -414,31 +338,11 @@ margin-left:10%;
   .slide.current {
     margin-left: -325px;
   }
-  .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
-  width: 100%;
-}
-.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
-  width: 100%;
-}
-
-.container{
-  width: 100%;
-}
 
 }
 
 @media (max-width: 370px) {
   
-  .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
-  width: 100%;
-}
-.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
-  width: 100%;
-}
-
-.container{
-  width: 100%;
-}
 
 }
 

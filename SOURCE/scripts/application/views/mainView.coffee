@@ -9,8 +9,6 @@ define [
 
       el: '#header'
 
-      template : _.template($('#app-template').html())
-
       initialize : ()->
         @listenTo @model, 'change:organisations', @render
         @listenTo @model, 'home', @emptyConfs
@@ -78,8 +76,6 @@ define [
       render: ()-> 
         $('.organisation').remove()
         console.log "main view is redenring"
-        ###if $('#header').is ':empty'
-          @$el.html @template()###
 
         @model.get('organisations').each (organisation)->
           organisationView = new OrganisationView ({model:organisation})
