@@ -20,12 +20,38 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
       var _this = this;
       this.listenTo(this.model, 'change:organisations', this.render);
       this.listenTo(this.model, 'home', this.emptyConfs);
+      $('#prevpage').hide();
+      this.offset = 0;
       this.on('ServerConnection', function(data) {
         console.log("mainV connected");
         return _this.connectNotif(data);
       });
       $('#appcontainer').delegate('#nextpage', 'click', function(e) {
         return _this.nextPage();
+      });
+      $('#appcontainer').delegate('#prevpage', 'click', function(e) {
+        return _this.prevPage();
+      });
+      $('#appcontainer').delegate('#all-shows', 'click', function(e) {
+        return _this.allShows();
+      });
+      /*$('#prevpage').waypoint 
+        handler:() =>
+          console.log "waypoint"
+        offset: '-100%'
+      
+      $('#nextpage').waypoint
+        handler:() =>
+          console.log "waypointnext"
+        offset: '100%'
+      */
+
+      $('#appcontainer').scroll(function() {
+        console.log("offset button=", $("#nextpage").offset().top + $("#nextpage").outerHeight());
+        console.log("taille:", $('#appcontainer').height());
+        if ($("#nextpage").offset().top + $("#nextpage").outerHeight() === $('#appcontainer').height()) {
+          return $("#nextpage").click();
+        }
       });
       /* $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
         txt = $(e.target).attr('id')
@@ -108,6 +134,15 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
           return console.log(href);
         }
       }
+    };
+
+    mainView.prototype.prevPage = function() {};
+
+    mainView.prototype.allShows = function() {
+      $('.emissions').text($('#all-shows').text());
+      return Backbone.history.navigate('home/', {
+        trigger: true
+      });
     };
 
     return mainView;

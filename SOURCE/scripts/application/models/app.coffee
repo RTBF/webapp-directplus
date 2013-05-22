@@ -49,6 +49,7 @@ define [
             @get('organisations').add organisation
           @trigger 'change:organisations'
 
+
         
 
       restoreAllConf : (data)->
@@ -61,6 +62,7 @@ define [
             console.log conf
             @get('organisations').get(conf._orga).addConf conf
         @loaded=true
+        @trigger "scroll"
             
 
       restoreConf : (data)->
@@ -69,6 +71,7 @@ define [
         if len>=0
           @get('organisations').get(data[0]._orga).restore data
           @get('organisations').get(data[0]._orga).loaded = true
+        @trigger "scroll"
           
 
       restoreSlides : (data)->
@@ -77,6 +80,7 @@ define [
         if len>=0
           @get('organisations').get(@get('orgChoose')).get('conferencesC').get(data[0]._conf).restore data
           @set 'confChoosed', data[0]._conf
+        
 
 
       organisationChoosed : (id)->

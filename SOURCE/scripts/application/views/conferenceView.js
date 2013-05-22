@@ -78,8 +78,9 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
     };
 
     ConferenceView.prototype.setCountDown = function() {
-      var directDate, intervalmilliseconde, timer, today,
+      var directDate, elt, id, intervalmilliseconde, timer, today, value,
         _this = this;
+      id = '#' + this.model.get('id');
       timer = '#' + this.model.get('id') + ' .timer';
       directDate = new Date(this.model.get('date'));
       today = new Date();
@@ -92,12 +93,15 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
       } else {
         console.log($(timer).html());
         if (typeof ($(timer).html()) === 'undefined') {
-          console.log("so what");
           return setTimeout(function() {
             return _this.setCountDown();
           }, 998);
         } else {
-          return $(timer).text("REVOIR");
+          $(timer).text("REVOIR");
+          elt = $(id).parent();
+          console.log("index: ", $('li.conference').index(elt));
+          value = $('.conferenceList  .conference').first().height() * ($('.conferenceList .conference').index(elt) + 1);
+          return $('#appcontainer').scrollTop(value);
         }
       }
     };

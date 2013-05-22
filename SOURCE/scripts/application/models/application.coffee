@@ -169,6 +169,7 @@ define [
         $('.slides').fadeOut ()->
           $('.confBlock').fadeIn()
 
+
     confScreen: (orgid,page)->
       @HaveFirstLoad=false
       console.log page
@@ -195,6 +196,7 @@ define [
         @orgChoose = true
         $('.slides').fadeOut ()->
           $('.confBlock').fadeIn()
+        
         
 
     slScreen: ( orgid , confid)=>

@@ -80,7 +80,8 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
           this.get('organisations').get(conf._orga).addConf(conf);
         }
       }
-      return this.loaded = true;
+      this.loaded = true;
+      return this.trigger("scroll");
     };
 
     App.prototype.restoreConf = function(data) {
@@ -89,8 +90,9 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       len = data.length - 1;
       if (len >= 0) {
         this.get('organisations').get(data[0]._orga).restore(data);
-        return this.get('organisations').get(data[0]._orga).loaded = true;
+        this.get('organisations').get(data[0]._orga).loaded = true;
       }
+      return this.trigger("scroll");
     };
 
     App.prototype.restoreSlides = function(data) {

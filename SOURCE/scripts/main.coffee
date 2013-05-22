@@ -9,6 +9,8 @@ requirejs.config
     backbone: 'vendors/backbone/backbone'
     backbonels: 'vendors/backbone/backbone.localStorage'
     bootstrap: 'vendors/bootstrap/bootstrap'
+    waypoints: 'vendors/jquery/waypoints'
+    infinitescroll: 'vendors/jquery/infinitescroll'
     text: 'vendors/require/text'
   shim: 
     backbone:
@@ -18,10 +20,14 @@ requirejs.config
       exports: '_'
     bootstrap : 
       deps: ['jquery']
+    waypoints :
+      deps:['jquery']
+    infinitescroll:
+      deps:['jquery']
   wait: '5s'
 
 # require 
-require ['backbone', 'backbonels', 'jquery','application/models/application','bootstrap'],(Backbone,Backbonels,$,App,Bs) ->
+require ['backbone', 'backbonels', 'jquery','application/models/application','bootstrap','waypoints','infinitescroll'],(Backbone,Backbonels,$,App,Bs,Wp,Is) ->
 #require ['backbone','jquery','application/models/application', 'bootstrap'],(Backbone,$,Application) ->
   $ ()->
     App = new App()

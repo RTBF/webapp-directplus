@@ -14,6 +14,8 @@ define [
       initialize : ()->
         @listenTo @model, 'change:organisations', @render
         @listenTo @model, 'home', @emptyConfs
+        $('#prevpage').hide()
+        @offset = 0
         @on 'ServerConnection', (data)=>
           console.log "mainV connected"
           @connectNotif(data)
@@ -21,7 +23,41 @@ define [
 
         $('#appcontainer').delegate '#nextpage', 'click', (e)=>
           @nextPage()
+        $('#appcontainer').delegate '#prevpage', 'click', (e)=>
+          @prevPage()
+
+        $('#appcontainer').delegate '#all-shows', 'click', (e)=>
+          @allShows()
+
+        ###$('#prevpage').waypoint 
+          handler:() =>
+            console.log "waypoint"
+          offset: '-100%'
+
+        $('#nextpage').waypoint
+          handler:() =>
+            console.log "waypointnext"
+          offset: '100%'###
+        
+        $('#appcontainer').scroll ()=>
+          #console.log "scrolling"
+          #@offset = $(".conference:last").offset()
+          #console.log "taile d'une conference:", $(".conference:last").height()
+          #console.log "offset:", $(".conference:last").offset()
+          console.log "offset button=", $("#nextpage").offset().top+$("#nextpage").outerHeight()
+          #console.log "difference:", @offset.top-$('#appcontainer').height()
+          #console.log "scroll pos:", $('#appcontainer').scrollTop()
+          #console.log "scroll pos conferences", $('.conference').scrollTop()
+          console.log "taille:", $('#appcontainer').height()
+          #console.log "taille window:", $(window).height()
+
           
+
+          
+          if $("#nextpage").offset().top+$("#nextpage").outerHeight() is $('#appcontainer').height()
+            $("#nextpage").click()
+
+
 
 
         ### $('#appcontainer').delegate '.conf-item' ,'click ', (e)=>
@@ -92,6 +128,14 @@ define [
             href = 'conference/'+orgid+'/'+page
             Backbone.history.navigate(href, trigger:true)
             console.log href
+
+      prevPage:()->
+        #
+      allShows:()->
+        $('.emissions').text $('#all-shows').text()
+        Backbone.history.navigate('home/', trigger:true)
+
+        
             
 
         

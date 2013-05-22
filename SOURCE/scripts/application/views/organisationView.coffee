@@ -34,6 +34,9 @@ define [
           conferenceView = new ConferenceView ({model:conference})
           $('.conferenceList').append(conferenceView.render().el)
         @
+        console.log $('#nextpage').offset()
+        console.log $('#nextpage').offsetParent()
+
 
       choose:(ev)->
         id = @model.get 'id'
@@ -41,6 +44,7 @@ define [
         console.log href
         $('.conference').remove()
         Backbone.history.navigate(href, trigger:true)
+        $('.emissions').text @model.get('name')
 
       renderAdd:(id)->
         console.log id
@@ -48,7 +52,8 @@ define [
         conferenceView = new ConferenceView {model:conference}
         console.log "confView: ", conferenceView
         $('.conferenceList').append(conferenceView.render().el)
-        @
+        
+        console.log $('#nextpage').offset()
 
       emptyConfs:()->
         console.log "got to empty home"

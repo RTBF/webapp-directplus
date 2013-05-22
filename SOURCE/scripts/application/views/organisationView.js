@@ -45,7 +45,10 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
         });
         return $('.conferenceList').append(conferenceView.render().el);
       });
-      return this;
+      this;
+
+      console.log($('#nextpage').offset());
+      return console.log($('#nextpage').offsetParent());
     };
 
     OrganisationView.prototype.choose = function(ev) {
@@ -54,9 +57,10 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
       href = '/conference/' + id + '/' + 1;
       console.log(href);
       $('.conference').remove();
-      return Backbone.history.navigate(href, {
+      Backbone.history.navigate(href, {
         trigger: true
       });
+      return $('.emissions').text(this.model.get('name'));
     };
 
     OrganisationView.prototype.renderAdd = function(id) {
@@ -68,7 +72,7 @@ define(['jquery', 'backbone', 'application/views/conferenceView'], function($, B
       });
       console.log("confView: ", conferenceView);
       $('.conferenceList').append(conferenceView.render().el);
-      return this;
+      return console.log($('#nextpage').offset());
     };
 
     OrganisationView.prototype.emptyConfs = function() {

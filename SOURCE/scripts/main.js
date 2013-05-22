@@ -7,6 +7,8 @@ requirejs.config({
     backbone: 'vendors/backbone/backbone',
     backbonels: 'vendors/backbone/backbone.localStorage',
     bootstrap: 'vendors/bootstrap/bootstrap',
+    waypoints: 'vendors/jquery/waypoints',
+    infinitescroll: 'vendors/jquery/infinitescroll',
     text: 'vendors/require/text'
   },
   shim: {
@@ -19,12 +21,18 @@ requirejs.config({
     },
     bootstrap: {
       deps: ['jquery']
+    },
+    waypoints: {
+      deps: ['jquery']
+    },
+    infinitescroll: {
+      deps: ['jquery']
     }
   },
   wait: '5s'
 });
 
-require(['backbone', 'backbonels', 'jquery', 'application/models/application', 'bootstrap'], function(Backbone, Backbonels, $, App, Bs) {
+require(['backbone', 'backbonels', 'jquery', 'application/models/application', 'bootstrap', 'waypoints', 'infinitescroll'], function(Backbone, Backbonels, $, App, Bs, Wp, Is) {
   return $(function() {
     App = new App();
     return console.log("launched");

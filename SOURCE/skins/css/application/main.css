@@ -370,6 +370,9 @@ margin-left:10%;
     border-radius: 0px 0px 0px 0px;
     padding: 0px;
 }
+#prevpage{
+  display: none;
+}
 .tumb .thumbnail img{
     height: 150px;
     width: 100%;
@@ -388,6 +391,9 @@ margin-left:10%;
     border: medium none;
     border-radius: 0px 0px 0px 0px;
     
+}
+#nextpage{
+  opacity: 0;
 }
 
 @media (max-width: 490px) { 

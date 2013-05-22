@@ -57,6 +57,7 @@ define [
         Backbone.history.navigate(href, trigger:true)
 
       setCountDown:()->
+        id = '#'+@model.get('id')
         timer= '#'+@model.get('id')+' .timer'
         directDate = new Date @model.get('date')
         today = new Date()
@@ -71,13 +72,17 @@ define [
         else
           console.log $(timer).html()
           if typeof($(timer).html()) is 'undefined'
-            console.log "so what"
             setTimeout ()=>
               @setCountDown()
             ,
               998
           else
             $(timer).text("REVOIR")
+            elt = $(id).parent()
+
+            console.log "index: ", $('li.conference').index(elt)
+            value =$('.conferenceList  .conference').first().height() * ($('.conferenceList .conference').index(elt)+1)
+            $('#appcontainer').scrollTop(value)
 
       
       getIntervalTimer:(intervalmilliseconde)->
