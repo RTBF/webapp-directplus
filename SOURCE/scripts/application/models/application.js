@@ -119,6 +119,9 @@ define(['application/config', 'application/views/mainView', 'application/models/
         return setTimeout(function() {
           return _this.loadPageOneByOne(first, end);
         }, 100);
+      } else {
+        this.HaveFirstLoad = true;
+        return this.showConfs();
       }
     };
 
@@ -136,11 +139,23 @@ define(['application/config', 'application/views/mainView', 'application/models/
         return setTimeout(function() {
           return _this.loadPageOneByOneConf(first, end, orgid);
         }, 100);
+      } else {
+        this.HaveConfFirstLoad = true;
+        return this.showConfs();
       }
+    };
+
+    Application.prototype.showConfs = function() {
+      var _this = this;
+      return $('.slides').fadeOut(function() {
+        $('.confBlock').fadeIn();
+        return _this.app.allLoaded = true;
+      });
     };
 
     Application.prototype.orgScreen = function(page) {
       var _this = this;
+      this.app.allLoaded = false;
       this.HaveConfFirstLoad = false;
       page = parseInt(page);
       console.log("hello: ", page);
@@ -156,22 +171,22 @@ define(['application/config', 'application/views/mainView', 'application/models/
           this.HaveFirstLoad = true;
           this.app.trigger('home');
           this.socket.emit('allConfs', page);
+          return this.showConfs();
         } else {
           if (this.HaveFirstLoad === false) {
             this.app.trigger('home');
-            this.loadPageOneByOne(1, page);
+            return this.loadPageOneByOne(1, page);
           } else {
             this.socket.emit('allConfs', page);
+            return this.showConfs();
           }
         }
-        return $('.slides').fadeOut(function() {
-          return $('.confBlock').fadeIn();
-        });
       }
     };
 
     Application.prototype.confScreen = function(orgid, page) {
       var _this = this;
+      this.app.allLoaded = false;
       this.HaveFirstLoad = false;
       console.log(page);
       page = parseInt(page);
@@ -188,18 +203,17 @@ define(['application/config', 'application/views/mainView', 'application/models/
           this.HaveConfFirstLoad = true;
           this.app.get('organisations').get(this.app.get('orgChoose')).trigger('empty');
           this.socket.emit('organisationChoosed', orgid, page);
+          this.showConfs();
         } else {
           if (this.HaveConfFirstLoad === false) {
             this.app.get('organisations').get(this.app.get('orgChoose')).trigger('empty');
             this.loadPageOneByOneConf(1, page, orgid);
           } else {
             this.socket.emit('organisationChoosed', orgid, page);
+            this.showConfs();
           }
         }
-        this.orgChoose = true;
-        return $('.slides').fadeOut(function() {
-          return $('.confBlock').fadeIn();
-        });
+        return this.orgChoose = true;
       }
     };
 

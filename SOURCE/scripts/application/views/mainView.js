@@ -47,9 +47,8 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
       */
 
       $('#appcontainer').scroll(function() {
-        console.log("offset button=", $("#nextpage").offset().top + $("#nextpage").outerHeight());
-        console.log("taille:", $('#appcontainer').height());
-        if ($("#nextpage").offset().top + $("#nextpage").outerHeight() === $('#appcontainer').height()) {
+        console.log(_this.model.allLoaded);
+        if ($("#nextpage").offset().top + $("#nextpage").outerHeight() === $('#appcontainer').height() && _this.model.allLoaded) {
           return $("#nextpage").click();
         }
       });

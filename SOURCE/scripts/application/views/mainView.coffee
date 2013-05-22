@@ -40,21 +40,8 @@ define [
           offset: '100%'###
         
         $('#appcontainer').scroll ()=>
-          #console.log "scrolling"
-          #@offset = $(".conference:last").offset()
-          #console.log "taile d'une conference:", $(".conference:last").height()
-          #console.log "offset:", $(".conference:last").offset()
-          console.log "offset button=", $("#nextpage").offset().top+$("#nextpage").outerHeight()
-          #console.log "difference:", @offset.top-$('#appcontainer').height()
-          #console.log "scroll pos:", $('#appcontainer').scrollTop()
-          #console.log "scroll pos conferences", $('.conference').scrollTop()
-          console.log "taille:", $('#appcontainer').height()
-          #console.log "taille window:", $(window).height()
-
-          
-
-          
-          if $("#nextpage").offset().top+$("#nextpage").outerHeight() is $('#appcontainer').height()
+          console.log @model.allLoaded
+          if $("#nextpage").offset().top+$("#nextpage").outerHeight() is $('#appcontainer').height() and @model.allLoaded
             $("#nextpage").click()
 
 

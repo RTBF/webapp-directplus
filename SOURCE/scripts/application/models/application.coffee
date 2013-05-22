@@ -127,6 +127,10 @@ define [
           @loadPageOneByOne first, end
         ,
           100
+      else
+        @HaveFirstLoad=true
+        @showConfs()
+
 
     loadPageOneByOneConf:(first, end, orgid)->
       console.log 'first: ', first
@@ -141,10 +145,19 @@ define [
           @loadPageOneByOneConf first, end, orgid
         ,
           100
+      else
+        @HaveConfFirstLoad = true
+        @showConfs()
+
+    showConfs:()->
+      $('.slides').fadeOut ()=>
+        $('.confBlock').fadeIn()
+        @app.allLoaded = true
 
 
 
     orgScreen:(page)->
+      @app.allLoaded = false
       @HaveConfFirstLoad=false
       page = parseInt page
       console.log "hello: ", page
@@ -160,17 +173,21 @@ define [
           @HaveFirstLoad=true
           @app.trigger 'home'
           @socket.emit 'allConfs', page
+          @showConfs()
+
         else
           if @HaveFirstLoad is false
             @app.trigger 'home'
             @loadPageOneByOne(1, page)
           else
             @socket.emit 'allConfs', page
-        $('.slides').fadeOut ()->
-          $('.confBlock').fadeIn()
+            @showConfs()
+       
+          
 
 
     confScreen: (orgid,page)->
+      @app.allLoaded = false
       @HaveFirstLoad=false
       console.log page
       page = parseInt page
@@ -187,19 +204,21 @@ define [
           @HaveConfFirstLoad = true
           @app.get('organisations').get(@app.get('orgChoose')).trigger 'empty'
           @socket.emit 'organisationChoosed', orgid, page
+          @showConfs()
         else
           if @HaveConfFirstLoad is false
             @app.get('organisations').get(@app.get('orgChoose')).trigger 'empty'
             @loadPageOneByOneConf(1, page, orgid)
           else
             @socket.emit 'organisationChoosed', orgid, page
+            @showConfs()
         @orgChoose = true
-        $('.slides').fadeOut ()->
-          $('.confBlock').fadeIn()
+        
         
         
 
     slScreen: ( orgid , confid)=>
+
       @HaveConfFirstLoad=false
       @HaveFirstLoad=false
       @app.set 'orgChoose', orgid

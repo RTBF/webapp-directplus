@@ -59,12 +59,13 @@ define [
       setCountDown:()->
         id = '#'+@model.get('id')
         timer= '#'+@model.get('id')+' .timer'
+        img = '#'+@model.get('id')+' .play img'
         directDate = new Date @model.get('date')
         today = new Date()
         intervalmilliseconde = directDate.getTime()-today.getTime()
         
         if intervalmilliseconde > 0
-          $(timer).text(@getIntervalTimer(intervalmilliseconde))
+          $(timer).html(@getIntervalTimer(intervalmilliseconde))
           setTimeout ()=>
             @setCountDown()
           ,
@@ -78,6 +79,7 @@ define [
               998
           else
             $(timer).text("REVOIR")
+            $(img).attr 'src', 'http://projet.local.rtbf.be/RTBF/webapp-directplus/SOURCE/skins/images/pictosplayed.png'
             elt = $(id).parent()
 
             console.log "index: ", $('li.conference').index(elt)
@@ -94,7 +96,7 @@ define [
         intervalmilliseconde = intervalmilliseconde - (minutes*1000*60)
         secondes = parseInt intervalmilliseconde / (1000)
 
-        interval= day+" DAYS "+hours+":"+minutes+":"+secondes
+        interval= day+" DAYS "+"<br/>"+hours+":"+minutes+":"+secondes
         interval
 
 

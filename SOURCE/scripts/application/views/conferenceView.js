@@ -78,15 +78,16 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
     };
 
     ConferenceView.prototype.setCountDown = function() {
-      var directDate, elt, id, intervalmilliseconde, timer, today, value,
+      var directDate, elt, id, img, intervalmilliseconde, timer, today, value,
         _this = this;
       id = '#' + this.model.get('id');
       timer = '#' + this.model.get('id') + ' .timer';
+      img = '#' + this.model.get('id') + ' .play img';
       directDate = new Date(this.model.get('date'));
       today = new Date();
       intervalmilliseconde = directDate.getTime() - today.getTime();
       if (intervalmilliseconde > 0) {
-        $(timer).text(this.getIntervalTimer(intervalmilliseconde));
+        $(timer).html(this.getIntervalTimer(intervalmilliseconde));
         return setTimeout(function() {
           return _this.setCountDown();
         }, 998);
@@ -98,6 +99,7 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
           }, 998);
         } else {
           $(timer).text("REVOIR");
+          $(img).attr('src', 'http://projet.local.rtbf.be/RTBF/webapp-directplus/SOURCE/skins/images/pictosplayed.png');
           elt = $(id).parent();
           console.log("index: ", $('li.conference').index(elt));
           value = $('.conferenceList  .conference').first().height() * ($('.conferenceList .conference').index(elt) + 1);
@@ -115,7 +117,7 @@ define(['jquery', 'backbone', 'application/views/slideScreen'], function($, Back
       minutes = parseInt(intervalmilliseconde / (1000 * 60));
       intervalmilliseconde = intervalmilliseconde - (minutes * 1000 * 60);
       secondes = parseInt(intervalmilliseconde / 1000.);
-      interval = day + " DAYS " + hours + ":" + minutes + ":" + secondes;
+      interval = day + " DAYS " + "<br/>" + hours + ":" + minutes + ":" + secondes;
       return interval;
     };
 
