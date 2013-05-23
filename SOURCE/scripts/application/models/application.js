@@ -102,7 +102,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
         return _this.orgScreen(page);
       });
       this.on('route:slideScreen', function(orgid, confid) {
-        return _this.slScreen(orgid, confid);
+        return _this.slScreen(orgid, confid, 1);
       });
       return Backbone.history.start();
     };
@@ -160,7 +160,7 @@ define(['application/config', 'application/views/mainView', 'application/models/
       page = parseInt(page);
       console.log("hello: ", page);
       this.app.set('orgChoose', ' ');
-      this.app.set('confChoose', ' ');
+      this.app.set('confChoosed', ' ');
       if (this.app.get('organisations').isEmpty()) {
         setTimeout(function() {
           return _this.orgScreen(page);
@@ -186,12 +186,13 @@ define(['application/config', 'application/views/mainView', 'application/models/
 
     Application.prototype.confScreen = function(orgid, page) {
       var _this = this;
+      this.orgChoosed = true;
       this.app.allLoaded = false;
       this.HaveFirstLoad = false;
       console.log(page);
       page = parseInt(page);
       this.app.set('orgChoose', orgid);
-      this.app.set('confChoose', ' ');
+      this.app.set('confChoosed', ' ');
       console.log("emmission choosed");
       if (this.app.get('organisations').isEmpty()) {
         setTimeout(function() {
@@ -217,43 +218,53 @@ define(['application/config', 'application/views/mainView', 'application/models/
       }
     };
 
-    Application.prototype.slScreen = function(orgid, confid) {
+    Application.prototype.slScreen = function(orgid, confid, page) {
       var _this = this;
       this.app.allLoaded = false;
       this.HaveConfFirstLoad = false;
       this.HaveFirstLoad = false;
       this.app.set('orgChoose', orgid);
-      this.app.set('confChoose', confid);
+      this.app.set('confChoosed', confid);
       if (this.app.get('organisations').isEmpty()) {
         setTimeout(function() {
-          return _this.slScreen(orgid, confid);
+          return _this.slScreen(orgid, confid, page);
         }, 100);
       }
       if (this.app.get('organisations').isEmpty() === false) {
-        if (typeof this.orgChoosed === 'undefined') {
-          this.socket.emit('organisationChoosed', orgid);
-          this.orgChoosed = true;
-        }
         if (typeof this.app.get('organisations').get(orgid) === 'undefined') {
           console.log('get org id est indefini');
           setTimeout(function() {
-            return _this.slScreen(orgid, confid);
-          }, 2000);
+            return _this.slScreen(orgid, confid, page);
+          }, 200);
         }
         if (typeof this.app.get('organisations').get(orgid) !== 'undefined') {
-          console.log("get orgid est defini");
+          if (typeof this.orgChoosed === 'undefined' || this.orgChoosed === false) {
+            console.log("@orgChoosed is undefined");
+            this.socket.emit('organisationChoosed', orgid, page);
+            this.orgChoosed = true;
+          }
+          console.log("get orgid est defini: ");
+          console.log(this.app.get('organisations').get(orgid));
           if (this.app.get('organisations').get(orgid).get('conferencesC').isEmpty()) {
             console.log("la liste des conferences est vide");
             setTimeout(function() {
-              return _this.slScreen(orgid, confid);
-            }, 100);
+              return _this.slScreen(orgid, confid, page);
+            }, 2000);
           }
           if (this.app.get('organisations').get(orgid).get('conferencesC').isEmpty() === false) {
-            console.log("je suis là");
-            this.socket.emit('conferenceChoosed', confid);
-            return $('.confBlock').fadeOut(function() {
-              return $('.slides').fadeIn();
-            });
+            if (typeof this.app.get('organisations').get(orgid).get('conferencesC').get(this.app.get('confChoosed')) === "undefined") {
+              this.orgChoosed = false;
+              setTimeout(function() {
+                return _this.slScreen(orgid, confid, page++);
+              }, 2000);
+            }
+            if (typeof this.app.get('organisations').get(orgid).get('conferencesC').get(this.app.get('confChoosed')) !== "undefined") {
+              console.log("je suis là");
+              this.socket.emit('conferenceChoosed', confid);
+              return $('.confBlock').fadeOut(function() {
+                return $('.slides').fadeIn();
+              });
+            }
           }
         }
       }

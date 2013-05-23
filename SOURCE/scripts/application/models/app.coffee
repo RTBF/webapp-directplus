@@ -25,6 +25,7 @@ define [
         @on 'slides', (data)->
           @restoreSlides data
         @on 'newSlide', (data)->
+          console.log "conf:", @get('confChoosed')
           @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'newSlide', data
         @on 'next', ()->
           @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).trigger 'next'
@@ -71,15 +72,11 @@ define [
         if len>=0
           @get('organisations').get(data[0]._orga).restore data
           @get('organisations').get(data[0]._orga).loaded = true
-        @trigger "scroll"
           
 
       restoreSlides : (data)->
         console.log "data:", data
-        len = data.length - 1
-        if len>=0
-          @get('organisations').get(@get('orgChoose')).get('conferencesC').get(data[0]._conf).restore data
-          @set 'confChoosed', data[0]._conf
+        @get('organisations').get(@get('orgChoose')).get('conferencesC').get(@get('confChoosed')).restore data
         
 
 
@@ -87,6 +84,7 @@ define [
         organisationsFound = @get('organisations').where _id:id
         console.log organisationsFound[0]
         @set 'organisation', organisationsFound[0]
+
 
       allNextPage:(data, page)->
         newPage = parseInt page

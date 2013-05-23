@@ -106,7 +106,7 @@ define [
         @orgScreen(page)
 
       @on 'route:slideScreen', (orgid, confid)=>
-        @slScreen(orgid, confid)
+        @slScreen(orgid, confid, 1)
 
       
       # Tell backbone to take care of the url navigation and history
@@ -162,7 +162,7 @@ define [
       page = parseInt page
       console.log "hello: ", page
       @app.set 'orgChoose', ' '
-      @app.set 'confChoose', ' '
+      @app.set 'confChoosed', ' '
       if @app.get('organisations').isEmpty()
         setTimeout ()=>
           @orgScreen(page)
@@ -187,12 +187,13 @@ define [
 
 
     confScreen: (orgid,page)->
+      @orgChoosed = true
       @app.allLoaded = false
       @HaveFirstLoad=false
       console.log page
       page = parseInt page
       @app.set 'orgChoose', orgid
-      @app.set 'confChoose', ' '
+      @app.set 'confChoosed', ' '
       console.log "emmission choosed"
       if @app.get('organisations').isEmpty()
         setTimeout ()=>
@@ -217,47 +218,55 @@ define [
         
         
 
-    slScreen: ( orgid , confid)=>
+    slScreen: ( orgid , confid, page)=>
       @app.allLoaded = false
       @HaveConfFirstLoad=false
       @HaveFirstLoad=false
       @app.set 'orgChoose', orgid
-      @app.set 'confChoose', confid
+      @app.set 'confChoosed', confid
       #@trigger 'slideRoute', confid
       if @app.get('organisations').isEmpty()
         setTimeout ()=>
-          @slScreen(orgid,confid)
+          @slScreen(orgid,confid,page)
         ,
         100
 
       if @app.get('organisations').isEmpty() is false 
-
-        if typeof@orgChoosed is 'undefined'
-
-          @socket.emit 'organisationChoosed', orgid
-          @orgChoosed = true
-
         if typeof@app.get('organisations').get(orgid) is 'undefined'
           console.log 'get org id est indefini'
           setTimeout ()=>
-            @slScreen(orgid,confid)
+            @slScreen(orgid,confid,page)
           ,
-          2000
+          200
         if typeof@app.get('organisations').get(orgid) != 'undefined'
-          console.log "get orgid est defini"
+          
+          if typeof@orgChoosed is 'undefined' or @orgChoosed  is false
+            console.log "@orgChoosed is undefined"
+            @socket.emit 'organisationChoosed', orgid, page
+            @orgChoosed = true
+          
+          console.log "get orgid est defini: "
+          console.log @app.get('organisations').get(orgid)
 
           if @app.get('organisations').get(orgid).get('conferencesC').isEmpty()
             console.log "la liste des conferences est vide"
             setTimeout ()=>
-              @slScreen(orgid,confid)
+              @slScreen(orgid,confid,page)
             ,
-            100
+            2000
 
           if @app.get('organisations').get(orgid).get('conferencesC').isEmpty() is false
-            console.log "je suis là"
-            @socket.emit 'conferenceChoosed', confid
-            $('.confBlock').fadeOut ()->
-              $('.slides').fadeIn()
+            if typeof@app.get('organisations').get(orgid).get('conferencesC').get(@app.get('confChoosed')) is "undefined"
+              @orgChoosed = false
+              setTimeout ()=>
+                @slScreen(orgid,confid,page++)
+              ,
+              2000
+            if typeof@app.get('organisations').get(orgid).get('conferencesC').get(@app.get('confChoosed')) != "undefined"
+              console.log "je suis là"
+              @socket.emit 'conferenceChoosed', confid
+              $('.confBlock').fadeOut ()->
+                $('.slides').fadeIn()
 
     connect: () -> 
       @socket.emit 'allConfs', ''

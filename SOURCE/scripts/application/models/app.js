@@ -33,6 +33,7 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
         return this.restoreSlides(data);
       });
       this.on('newSlide', function(data) {
+        console.log("conf:", this.get('confChoosed'));
         return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).trigger('newSlide', data);
       });
       this.on('next', function() {
@@ -90,19 +91,13 @@ define(['jquery', 'backbone', 'application/collections/organisations', 'applicat
       len = data.length - 1;
       if (len >= 0) {
         this.get('organisations').get(data[0]._orga).restore(data);
-        this.get('organisations').get(data[0]._orga).loaded = true;
+        return this.get('organisations').get(data[0]._orga).loaded = true;
       }
-      return this.trigger("scroll");
     };
 
     App.prototype.restoreSlides = function(data) {
-      var len;
       console.log("data:", data);
-      len = data.length - 1;
-      if (len >= 0) {
-        this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(data[0]._conf).restore(data);
-        return this.set('confChoosed', data[0]._conf);
-      }
+      return this.get('organisations').get(this.get('orgChoose')).get('conferencesC').get(this.get('confChoosed')).restore(data);
     };
 
     App.prototype.organisationChoosed = function(id) {

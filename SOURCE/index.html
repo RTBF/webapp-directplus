@@ -91,7 +91,8 @@
 
                       </div>
 
-                <button id="nextpage">next</button>      
+                <button id="nextpage">next</button>   
+                
     </div>
 
 
@@ -165,7 +166,14 @@
 
  
 
- <script type="text/template" id="slides-template"> 
+ <script type="text/template" id="slides-video-template"> 
+ <div id="<%- id %>" >
+        <section class="middle">
+        <h1><%- title %></h1>
+        <iframe width="560" height="315" src="http://www.youtube.com/embed/<%-embed%>" frameborder="0" allowfullscreen></iframe>
+        <p><%- description %></p>
+          <section>
+      </div>
 
  </script>
  <script type="text/template" id="slide-template"> 
@@ -176,6 +184,7 @@
                 <section>
             </div>
   </script>
+
 
 <script src="scripts/vendors/require/require.js" data-main="scripts/main" type="text/javascript"></script>
 

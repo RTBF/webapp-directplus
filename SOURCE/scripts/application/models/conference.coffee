@@ -39,39 +39,38 @@ define [
         @navMode = false
         console.log "j'ai été restaurement"
         console.log @get('slidesC')
-        @get('slidesC').fetch()
-        len = data.length - 1
-        slideLen = @get('slidesC').length - 1
-
-        
-        
         @get('slidesC').reset()
         localStorage.clear()
         @get('slidesC').fetch()
-        for x in [0..len]
-          obj = $.parseJSON data[x].JsonData
-          obj.id = data[x]._id
-          slide = new Slide obj
-          @get('slidesC').add slide
-          slide.save()
+        if data.length > 0
+          len = data.length - 1
+          slideLen = @get('slidesC').length - 1
+          
           @get('slidesC').fetch()
-        @get('slidesC').each (slide)->
-          slide.set 'state', 'out'
-        taille = @get('slidesC').length
-        max = 3
-        while (max>0 && taille>0)
-          taille--
-          slide = @get('slidesC').at taille
-          switch max
-            when 3
-              slide.set 'state', 'current'
-            when 2
-              slide.set 'state', 'past'
-            when 1
-              slide.set 'state', 'far-past'
-          max--
-        console.log @get('slidesC')
-        console.log @get('slidesC')
+          for x in [0..len]
+            obj = $.parseJSON data[x].JsonData
+            obj.id = data[x]._id
+            slide = new Slide obj
+            @get('slidesC').add slide
+            slide.save()
+            @get('slidesC').fetch()
+          @get('slidesC').each (slide)->
+            slide.set 'state', 'out'
+          taille = @get('slidesC').length
+          max = 3
+          while (max>0 && taille>0)
+            taille--
+            slide = @get('slidesC').at taille
+            switch max
+              when 3
+                slide.set 'state', 'current'
+              when 2
+                slide.set 'state', 'past'
+              when 1
+                slide.set 'state', 'far-past'
+            max--
+          console.log @get('slidesC')
+          console.log @get('slidesC')
         @trigger 'change:slidesC'
 
       newSlide: (data)->

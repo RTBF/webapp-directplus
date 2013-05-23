@@ -51,42 +51,44 @@ define(['jquery', 'backbone', 'application/collections/slides', 'application/mod
       this.navMode = false;
       console.log("j'ai été restaurement");
       console.log(this.get('slidesC'));
-      this.get('slidesC').fetch();
-      len = data.length - 1;
-      slideLen = this.get('slidesC').length - 1;
       this.get('slidesC').reset();
       localStorage.clear();
       this.get('slidesC').fetch();
-      for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
-        obj = $.parseJSON(data[x].JsonData);
-        obj.id = data[x]._id;
-        slide = new Slide(obj);
-        this.get('slidesC').add(slide);
-        slide.save();
+      if (data.length > 0) {
+        len = data.length - 1;
+        slideLen = this.get('slidesC').length - 1;
         this.get('slidesC').fetch();
-      }
-      this.get('slidesC').each(function(slide) {
-        return slide.set('state', 'out');
-      });
-      taille = this.get('slidesC').length;
-      max = 3;
-      while (max > 0 && taille > 0) {
-        taille--;
-        slide = this.get('slidesC').at(taille);
-        switch (max) {
-          case 3:
-            slide.set('state', 'current');
-            break;
-          case 2:
-            slide.set('state', 'past');
-            break;
-          case 1:
-            slide.set('state', 'far-past');
+        for (x = _i = 0; 0 <= len ? _i <= len : _i >= len; x = 0 <= len ? ++_i : --_i) {
+          obj = $.parseJSON(data[x].JsonData);
+          obj.id = data[x]._id;
+          slide = new Slide(obj);
+          this.get('slidesC').add(slide);
+          slide.save();
+          this.get('slidesC').fetch();
         }
-        max--;
+        this.get('slidesC').each(function(slide) {
+          return slide.set('state', 'out');
+        });
+        taille = this.get('slidesC').length;
+        max = 3;
+        while (max > 0 && taille > 0) {
+          taille--;
+          slide = this.get('slidesC').at(taille);
+          switch (max) {
+            case 3:
+              slide.set('state', 'current');
+              break;
+            case 2:
+              slide.set('state', 'past');
+              break;
+            case 1:
+              slide.set('state', 'far-past');
+          }
+          max--;
+        }
+        console.log(this.get('slidesC'));
+        console.log(this.get('slidesC'));
       }
-      console.log(this.get('slidesC'));
-      console.log(this.get('slidesC'));
       return this.trigger('change:slidesC');
     };
 
