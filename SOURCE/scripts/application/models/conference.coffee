@@ -50,6 +50,7 @@ define [
           for x in [0..len]
             obj = $.parseJSON data[x].JsonData
             obj.id = data[x]._id
+            obj.Type = data[x].Type
             slide = new Slide obj
             @get('slidesC').add slide
             slide.save()
@@ -77,6 +78,7 @@ define [
         
         obj = $.parseJSON data.JsonData
         obj.id = data._id
+        obj.Type = data.Type
         slide = new Slide obj
         if @navMode
           slideff = @get('slidesC').where state:'far-future'

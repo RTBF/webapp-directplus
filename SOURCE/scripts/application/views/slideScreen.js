@@ -18,6 +18,8 @@ define(['jquery', 'backbone', 'application/views/conferenceView', 'bootstrap'], 
 
     slideScreen.prototype.template = _.template($('#slide-template').html());
 
+    slideScreen.prototype.templateVideo = _.template($('#slide-video-template').html());
+
     slideScreen.prototype.initialize = function() {
       this.listenTo(this.model, 'change', this.render);
       return console.log("slideScreen initilized");
@@ -25,6 +27,8 @@ define(['jquery', 'backbone', 'application/views/conferenceView', 'bootstrap'], 
 
     slideScreen.prototype.render = function() {
       var modelId, slidet;
+      console.log(this.model);
+      console.log(this.model.toJSON());
       console.log('render called');
       modelId = '#' + this.model.get('id');
       if (this.model.get('state') === 'removed') {
@@ -47,7 +51,15 @@ define(['jquery', 'backbone', 'application/views/conferenceView', 'bootstrap'], 
         } else {
           console.log('je suis là');
           if (this.model.get('state') !== 'out') {
-            $('#SlideList').append(this.$el.html(this.template(this.model.toJSON())));
+            console.log("not out");
+            console.log(this.model.get('Type'));
+            switch (this.model.get('Type')) {
+              case 'text':
+                $('#SlideList').append(this.$el.html(this.template(this.model.toJSON())));
+                break;
+              case 'video':
+                $('#SlideList').append(this.$el.html(this.templateVideo(this.model.toJSON())));
+            }
           }
         }
         $(modelId).parent().removeClass().addClass("slide").addClass(this.model.get('state'));
@@ -61,7 +73,13 @@ define(['jquery', 'backbone', 'application/views/conferenceView', 'bootstrap'], 
       var modelId,
         _this = this;
       modelId = '#' + this.model.get('id');
-      $('#SlideList').append(this.$el.html(this.template(this.model.toJSON())));
+      switch (this.model.get('Type')) {
+        case 'text':
+          $('#SlideList').append(this.$el.html(this.template(this.model.toJSON())));
+          break;
+        case 'video':
+          $('#SlideList').append(this.$el.html(this.templateVideo(this.model.toJSON())));
+      }
       $(modelId).parent().removeClass().addClass("slide").addClass(this.model.get('state'));
       $(modelId).hide();
       return $(modelId).fadeIn(function() {

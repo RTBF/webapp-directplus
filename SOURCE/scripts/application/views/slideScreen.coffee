@@ -10,12 +10,15 @@ define [
       className: "slide"
 
       template : _.template($('#slide-template').html())
+      templateVideo : _.template($('#slide-video-template').html())
 
       initialize : ()->
         @listenTo @model, 'change', @render
         console.log  "slideScreen initilized"
 
       render: ()-> 
+        console.log @model
+        console.log @model.toJSON()
         console.log 'render called'
         #@.$el.html @template(@model.toJSON())
         modelId = '#'+@model.get('id')
@@ -38,9 +41,18 @@ define [
           else
             console.log 'je suis là'
             if @model.get('state') != 'out'
-              $('#SlideList').append(@.$el.html @template(@model.toJSON()))
-          
+              console.log "not out"
+              console.log @model.get 'Type'
+              switch @model.get 'Type'
+                when 'text'
+                  $('#SlideList').append(@.$el.html @template(@model.toJSON()))
+
+                  
+                when 'video'
+                  $('#SlideList').append(@.$el.html @templateVideo(@model.toJSON()))
+                  
           $(modelId).parent().removeClass().addClass("slide").addClass(@model.get('state'))
+          
         
         if @model.get('state') is 'out'
           $(modelId).parent().remove()
@@ -49,7 +61,14 @@ define [
       
       new:()->
         modelId = '#'+@model.get('id')
-        $('#SlideList').append(@.$el.html @template(@model.toJSON()))
+        switch @model.get 'Type'
+          when 'text'
+            $('#SlideList').append(@.$el.html @template(@model.toJSON()))
+            
+          when 'video'
+            $('#SlideList').append(@.$el.html @templateVideo(@model.toJSON()))
+            
+            
         $(modelId).parent().removeClass().addClass("slide").addClass(@model.get('state'))
         $(modelId).hide()
         $(modelId).fadeIn ()=>
