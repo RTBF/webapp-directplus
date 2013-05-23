@@ -9,7 +9,7 @@ define [
 
       defaults:
         name: ' '
-        tumb: ' '
+        thumb: ' '
         description: ' '
         page:1
         conferencesC: new Conferences()
