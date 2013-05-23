@@ -187,14 +187,13 @@ margin-left:10%;
   margin: 0 auto;
   position: relative;
   width: 80%;
+  height: 100%;
 }
 .slides {
   width: 100%;
   height: 100%;
   position: absolute;
-
-  /*margin-top: 50%;*/
-  /*position: absolute;*/
+  top: 71px;
   -webkit-transition: -webkit-transform 1.5s ease-in-out;
   -moz-transition: -moz-transform 1.5s ease-in-out;
   -o-transition: -o-transform 1.5s ease-in-out;
@@ -221,7 +220,7 @@ margin-left:10%;
   border-radius: 10px; 
   -moz-border-radius: 10px;
   opacity: 0.40;
-  top: 80px;
+  top: 10px;
   
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box;
