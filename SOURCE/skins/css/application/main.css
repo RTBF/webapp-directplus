@@ -30,6 +30,16 @@ margin-left:10%;
   height: 100%;
 }
 
+#wrap {
+  position: relative;
+  height: 100%;
+}
+
+#appcontainer {
+  position: relative;
+  height: 100%;
+}
+
 #appcontainer ul.conferenceList, ol {
     margin: 0 0 0 0;
     padding-top: 41px;
@@ -156,6 +166,7 @@ margin-left:10%;
 #header {
   position: fixed;
   width: 100%;
+  z-index: 15;
 }
 
 .emission-dropdown {
