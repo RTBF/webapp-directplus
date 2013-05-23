@@ -37,7 +37,7 @@ define [
             console.log "waypointnext"
           offset: '100%'###
         
-        $(window).scroll ()=>
+        $('#appcontainer').scroll ()=>
           console.log "scroll"
           console.log @model.allLoaded
           if $("#nextpage").offset().top+$("#nextpage").outerHeight() is $('#appcontainer').height() and @model.allLoaded
