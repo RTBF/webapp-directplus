@@ -1,10 +1,11 @@
 #loading {
   position: absolute;
+  top: 0px;
   width: 1280px;
   margin: 0 auto;
   overflow: hidden;
 }
-#loading .container {
+#loading .container-fluid {
   width: 250px;
   margin: 0 auto;
   padding-top: 50px;

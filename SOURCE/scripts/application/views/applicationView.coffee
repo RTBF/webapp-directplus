@@ -17,8 +17,6 @@ define [
 
       el: '#header'
 
-      template : _.template($('#app-template').html())
-
       initialize : ()->
         @organisations = new Organisations()
         @organisations.fetch()
@@ -34,8 +32,6 @@ define [
         $('.js-status').removeClass('disconnected').addClass('connected')
 
       render: ()-> 
-        @$el.html @template()
-        #@
 
       fullFillOrgList: (data)->
         $(".organisation").remove()
@@ -49,3 +45,4 @@ define [
         
         $("#loading").fadeOut()
         $("#wrap").fadeIn()
+        $("#header").fadeIn()

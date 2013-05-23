@@ -7,189 +7,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
   <!-- Bootstrap -->
   <link href="skins/css/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="skins/css/bootstrap/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
   <link href="skins/css/application/app.css" rel="stylesheet" media="screen">
 </head>
 
 <body >
-
-  <div id="loading">
-    <div class="container">
-      <p>Loading...</p>
-      <div class="ball"></div>
-      <div class="ball1"></div>
-    </div>
-  </div>
- 
-  
-  <div id="wrap">
-     <div id="header"> 
-  <div class="navbar navbar-inverse navbar-fixed-top">
-
-    <div class="navbar-inner">
-      <div class="container">
-        <div class="nav-collapse collapse"></div>
-        
-        <ul class="nav container">
-          <li class="pull-left active ">
-           <a href="#/home"> Home</a>
-         </li>
-         <li class="pull-center">
-               <img  class="logo" src="http://projet.local.rtbf.be/Test/img/RTBF_BE.png">
-         </li>
-          <li class=" pull-right">
-       <a href="#/organisation"> about</a>
-       </li>
-         
-        
-        </ul>
-       
-  
-       
-     </div>
-           
-   </div>
- </div></div>
-    
-
-    <div id="appcontainer" >
-      <div class='notifications bottom-right'></div>
-
-
-      <div class=" container confBlock ">
-            <div class="container dropdown ">
-               <a class="dropdown-toggle btn btn-inverse btn-large container "  data-toggle="dropdown" href="#">
-                <span class="emissions" >Dropdown</span>
-                 
-                    <b class="caret"></b>
-                </a>
-                    <!-- Link or button to toggle dropdown -->
-                    <ul class="dropdown-menu container" role="menu" aria-labelledby="dLabel">
-
-                    <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
-                     
-
-                    </ul>
-
-
-                    </div>
-
-                      <ul class="conferenceList">
-                        <button id="prevpage">previous</button>
-                        
-                      </ul>
-
-                      
-                      </div>
-                      <!--<div class="container confBlock onhideright">
-                      <ul class="confList thumbnails"></ul>
-                      </div>-->
-                      <div class= "slides">
-                        
-                        <ul  id ="SlideList"></ul>
-                        <button id="precedent" class="left carousel-control">‹</button>
-                        <button id="suivant" class="right carousel-control">›</button>
-
-                      </div>
-
-                <button id="nextpage">next</button>   
-                
-    </div>
-
-
-
-
-   <!-- <div id="footer">
-      <div class="navbar navbar-fixed-bottom">
-        <p class="muted credit">RTBF.be 2013</p>
+  <div id="maincontainer">
+    <div id="loading">
+      <div class="container-fluid">
+        <p>Loading...</p>
+        <div class="ball"></div>
+        <div class="ball1"></div>
       </div>
     </div>
 
-  </div>-->
-
-  
-  <script type="text/template" id="app-template"> 
- 
- </script>
- 
- <!-- <script type="text/template" id="Organisation-template"> 
-    <div class="row-fluid">
-      <div class="span4"><img  height="200" title="RTBF" src="<%-tumb%>" class="img-rounded"></div>
-      <div class="span6"><a class="org-item" ><h3 id="<%- _id %>"><%- name%></h3></a></div>
-      <div class="span2"><i class="icon-chevron-right"></i></div>
-    </div>
- </script>-->
-
-<script type="text/template" id="conf-template"> 
-    <div class="row-fluid conf-item" id="<%- _id %>">
-      <div class="span3 thumb">
-         <div class="thumbnail">
-        <img  alt="direct-plus" data-src="holder.js/300x200"  src="<%-thumb%>">
+    <div id="header" style="display:none;"> 
+      <div class="container-fluid">
+        <div class="navbar navbar-inverse navbar-fixed-top emission-navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="#/home"><img  class="logo" src="skins/images/rtbf_be.png"></a>
+            <div class="btn-group">
+              <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
+                <span class="emissions" ></span>
+                <span class="caret"></span>
+              </a>
+              <!-- Link or button to toggle dropdown -->
+              <ul class="dropdown-menu emission-dropdown" role="menu" aria-labelledby="dLabel">
+                  <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="span7 description">
-      <p><%- datestring %><br/>
-      <strong ><%- orgName%> :
-      <%- name%><br/></strong>
-      <%- description %></p>
-      </div>
-
-      <div class="span2 play">
-      <div class="thumbnail">
-        <img   data-src="holder.js/300x200" style="width: 50px; height: 50px;" src="http://projet.local.rtbf.be/RTBF/webapp-directplus/SOURCE/skins/images/pictosplay.png">
-        <div class="caption">
-        <p><strong class="timer">Load...</strong></p>
     </div>
+      
+    <div id="wrap" style="display:none;">
+      <div id="appcontainer" >
+        <div class='notifications bottom-right'></div>
+        <div class=" container-fluid confBlock ">
+          
+          <ul class="conferenceList">
+            <button id="prevpage">previous</button>
+          </ul>
+        </div>
+        <div class= "slides">
+          <ul  id ="SlideList"></ul>
+          <button id="precedent" class="left carousel-control">‹</button>
+          <button id="suivant" class="right carousel-control">›</button>
+        </div>
+        <button id="nextpage">next</button>      
       </div>
 
     </div>
- </script>
- <script type="text/template" id="Organisation-template"> 
+  <script type="text/template" id="conf-template"> 
+      <div class="row-fluid conf-item" id="<%- _id %>">
+        <div class="span3 thumb">
+           <div class="thumbnail">
+          <img  alt="direct-plus" data-src="holder.js/300x200"  src="<%-thumb%>">
+          </div>
+        </div>
 
-  <a class="org-item" id="<%- id%>" tabindex="-1" ><%- name%></a>
- </script>
+        <div class="span7 description">
+        <p><%- datestring %><br/>
+        <strong ><%- orgName%> :
+        <%- name%><br/></strong>
+        <%- description %></p>
+        </div>
 
- <script type="text/template" id="slides-video-template"> 
- <div id="<%- id %>" >
-        <section class="middle">
-        <h1><%- title %></h1>
-        <iframe width="560" height="315" src="http://www.youtube.com/embed/<%-embed%>" frameborder="0" allowfullscreen></iframe>
-        <p><%- description %></p>
-          <section>
+        <div class="span2 play hidden-phone">
+          <div class="thumbnail">
+            <img   data-src="holder.js/300x200" style="width: 50px; height: 50px;" src="skins/images/pictosplay.png">
+            <div class="caption">
+            <p><strong class="timer">Load...</strong></p>
+          </div>
+        </div>
+
       </div>
+  </script>
 
- </script>
- <script type="text/template" id="slide-template"> 
+  <script type="text/template" id="Organisation-template"> 
+    <a class="org-item" id="<%- id%>" tabindex="-1" ><%- name%></a>
+  </script>
+
+  <script type="text/template" id="slide-template"> 
             <div id="<%- id %>"  class="<%-Type%>" >
               <section class="middle">
                 <h2><%- title %></h2>
-            <img src="<%-thumb%>">
-        
+                <img src="<%-thumb%>">
+                <div><%= description %></div>
+                <div class="content"><%= content %></div>
+              </section>
 
-                
-                <p><strong><%= description %></strong></p>
-                <p class="content"><%= content %></p>
-                <section>
             </div>
   </script>
   <script type="text/template" id="slide-video-template"> 
             <div id="<%- id %>" class="<%-Type%>">
               <section class="middle">
-              <div>
-                <section class="infos">
                 <p><h2>Vidéo:</h2><br/> <%- title %><p>
-                </section>
-
                 <iframe  src="http://www.youtube.com/embed/<%-thumb%>" frameborder="0" allowfullscreen></iframe>
-                <p><strong><%= description %></strong></p>
-                </div>
-                
-                </section>
+                <div><%= description %></div>
+              </section>
             </div>
   </script>
 
 
-<script src="scripts/vendors/require/require.js" data-main="scripts/main" type="text/javascript"></script>
+  <script src="scripts/vendors/require/require.js" data-main="scripts/main" type="text/javascript"></script>
 
 </body>
 </html>

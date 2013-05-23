@@ -79,7 +79,7 @@ define [
               998
           else
             $(timer).text("REVOIR")
-            $(img).attr 'src', 'http://projet.local.rtbf.be/RTBF/webapp-directplus/SOURCE/skins/images/pictosplayed.png'
+            $(img).attr 'src', 'skins/images/pictosplayed.png'
             elt = $(id).parent()
 
             console.log "index: ", $('li.conference').index(elt)
