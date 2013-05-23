@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
   <!-- Bootstrap -->
   <link href="skins/css/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="skins/css/bootstrap/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
   <link href="skins/css/application/app.css" rel="stylesheet" media="screen">
 </head>
 
 <body >
-
   <div id="loading">
     <div class="container-fluid">
       <p>Loading...</p>
@@ -19,34 +19,28 @@
       <div class="ball1"></div>
     </div>
   </div>
- 
   
-  <div id="wrap">
-     <div id="header"> 
-      <div class="container-fluid">
-        <div class="row-fluid">
-          <div class="span1">
-            <a href="#/home"><img  class="logo" src="skins/images/rtbf_be.png"></a>
-          </div>
-          <div class="span10 emission-button">
-            <div class="btn-group">
-              <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
-                <span class="emissions" ></span>
-                <span class="caret"></span>
-              </a>
-              <!-- Link or button to toggle dropdown -->
-              <ul class="dropdown-menu emission-dropdown" role="menu" aria-labelledby="dLabel">
-                  <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="span1">
+  <div id="header"> 
+    <div class="container-fluid">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <a class="brand" href="#/home"><img  class="logo" src="skins/images/rtbf_be.png"></a>
+          <div class="btn-group">
+            <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
+              <span class="emissions" ></span>
+              <span class="caret"></span>
+            </a>
+            <!-- Link or button to toggle dropdown -->
+            <ul class="dropdown-menu emission-dropdown" role="menu" aria-labelledby="dLabel">
+                <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
+  </div>
     
-
+  <div id="wrap">
     <div id="appcontainer" >
       <div class='notifications bottom-right'></div>
       <div class=" container-fluid confBlock ">

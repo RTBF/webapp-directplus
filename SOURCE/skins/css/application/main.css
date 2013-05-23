@@ -8,6 +8,10 @@ body {
   left: 0px; top: 0px;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  background: #000;
+  background: -webkit-gradient(linear, left top, left bottom, from(#333), to(black));
+  background: -moz-linear-gradient(top, #333, black);
+  background: linear-gradient(top, #333, black);
 }
 
 ul {
@@ -39,19 +43,6 @@ margin-left:10%;
 .onhideleft{
   overflow: hidden;
   margin-left: -2000px;
-}
-
-#appcontainer{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  left: 0px;
-  top: 0px;
-  display: block;
-  overflow-x: hidden;
-  background: #000;
-  background: -webkit-gradient(linear, left top, left bottom, from(#333), to(black));
-  background: -moz-linear-gradient(top, #333, black);
 }
 
 #appcontainer ul.conferenceList, ol {
@@ -176,25 +167,28 @@ margin-left:10%;
 /**
   Header section
 **/
-#header{
-  position: absolute;
+#header {
+  position: fixed;
   width: 100%;
-  top: 0px;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.3); 
 }
+
 .emission-dropdown {
   background-image: linear-gradient(to bottom, #444444, #222222);
 }
 .emission-dropdown > li > a {
   color: white;
-  font-size: 17.5px;
-  
+  font-size: 17.5px;  
 }
 .emission-button {
   text-align: center;
 }
-
+.span1.oneliner {
+  float: left;
+  width: auto;
+}
+.span10.oneliner {
+  float: left;
+}
 /**
  Slide section
 **/
