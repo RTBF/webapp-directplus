@@ -12,75 +12,78 @@
 </head>
 
 <body >
-  <div id="loading">
-    <div class="container-fluid">
-      <p>Loading...</p>
-      <div class="ball"></div>
-      <div class="ball1"></div>
+  <div id="maincontainer">
+    <div id="loading">
+      <div class="container-fluid">
+        <p>Loading...</p>
+        <div class="ball"></div>
+        <div class="ball1"></div>
+      </div>
     </div>
-  </div>
-  
-  <div id="header"> 
-    <div class="container-fluid">
-      <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-          <a class="brand" href="#/home"><img  class="logo" src="skins/images/rtbf_be.png"></a>
-          <div class="btn-group">
-            <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
-              <span class="emissions" ></span>
-              <span class="caret"></span>
-            </a>
-            <!-- Link or button to toggle dropdown -->
-            <ul class="dropdown-menu emission-dropdown" role="menu" aria-labelledby="dLabel">
-                <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
-            </ul>
+    
+    <div id="header" style="display:none;"> 
+      <div class="container-fluid">
+        <div class="navbar navbar-inverse navbar-fixed-top emission-navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="#/home"><img  class="logo" src="skins/images/rtbf_be.png"></a>
+            <div class="btn-group">
+              <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
+                <span class="emissions" ></span>
+                <span class="caret"></span>
+              </a>
+              <!-- Link or button to toggle dropdown -->
+              <ul class="dropdown-menu emission-dropdown" role="menu" aria-labelledby="dLabel">
+                  <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-    
-  <div id="wrap">
-    <div id="appcontainer" >
-      <div class='notifications bottom-right'></div>
-      <div class=" container-fluid confBlock ">
-        
-        <ul class="conferenceList">
-          <button id="prevpage">previous</button>
-        </ul>
-      </div>
-      <div class= "slides">
-        <ul  id ="SlideList"></ul>
-        <button id="precedent" class="left carousel-control">‹</button>
-        <button id="suivant" class="right carousel-control">›</button>
-      </div>
-      <button id="nextpage">next</button>      
-    </div>
-
-<script type="text/template" id="conf-template"> 
-    <div class="row-fluid conf-item" id="<%- _id %>">
-      <div class="span3 thumb">
-         <div class="thumbnail">
-        <img  alt="direct-plus" data-src="holder.js/300x200"  src="<%-thumb%>">
+      
+    <div id="wrap" style="display:none;">
+      <div id="appcontainer" >
+        <div class='notifications bottom-right'></div>
+        <div class=" container-fluid confBlock ">
+          
+          <ul class="conferenceList">
+            <button id="prevpage">previous</button>
+          </ul>
         </div>
+        <div class= "slides">
+          <ul  id ="SlideList"></ul>
+          <button id="precedent" class="left carousel-control">‹</button>
+          <button id="suivant" class="right carousel-control">›</button>
+        </div>
+        <button id="nextpage">next</button>      
       </div>
-
-      <div class="span7 description">
-      <p><%- datestring %><br/>
-      <strong ><%- orgName%> :
-      <%- name%><br/></strong>
-      <%- description %></p>
-      </div>
-
-      <div class="span2 play">
-      <div class="thumbnail">
-        <img   data-src="holder.js/300x200" style="width: 50px; height: 50px;" src="skins/images/pictosplay.png">
-        <div class="caption">
-        <p><strong class="timer">Load...</strong></p>
+      
     </div>
+  <script type="text/template" id="conf-template"> 
+      <div class="row-fluid conf-item" id="<%- _id %>">
+        <div class="span3 thumb">
+           <div class="thumbnail">
+          <img  alt="direct-plus" data-src="holder.js/300x200"  src="<%-thumb%>">
+          </div>
+        </div>
+
+        <div class="span7 description">
+        <p><%- datestring %><br/>
+        <strong ><%- orgName%> :
+        <%- name%><br/></strong>
+        <%- description %></p>
+        </div>
+
+        <div class="span2 play">
+        <div class="thumbnail">
+          <img   data-src="holder.js/300x200" style="width: 50px; height: 50px;" src="skins/images/pictosplay.png">
+          <div class="caption">
+          <p><strong class="timer">Load...</strong></p>
+      </div>
+        </div>
+
       </div>
 
-    </div>
  </script>
 
  <script type="text/template" id="Organisation-template"> 

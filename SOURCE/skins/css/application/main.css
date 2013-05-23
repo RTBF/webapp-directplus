@@ -1,33 +1,12 @@
-body {
-  color:white;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0px; top: 0px;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  background: #000;
-  background: -webkit-gradient(linear, left top, left bottom, from(#333), to(black));
-  background: -moz-linear-gradient(top, #333, black);
-  background: linear-gradient(top, #333, black);
-}
-
-ul {
-  list-style: none outside none;
-}
-
-
-.conference .row-fluid{
-    cursor:pointer;
-    line-height: 30px;
-    opacity: 1.00;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-}
 .conference{
+  cursor:pointer;
+  line-height: 30px;
+  opacity: 1.00;
   padding-top:10px;
+}
+.conf-item{
+  border: 1px solid black;
+  background: rgba(0, 0, 0, 0.3);
 }
 .onshow.onhideright{
 margin-left:10%; 
@@ -43,6 +22,12 @@ margin-left:10%;
 .onhideleft{
   overflow: hidden;
   margin-left: -2000px;
+}
+
+#maincontainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 #appcontainer ul.conferenceList, ol {
@@ -164,6 +149,7 @@ margin-left:10%;
 .connect{
   /*float: right;*/
 }
+
 /**
   Header section
 **/
@@ -182,6 +168,10 @@ margin-left:10%;
 .emission-button {
   text-align: center;
 }
+.emission-navbar {
+  margin-left: 0px;
+  margin-right: 0px;
+}
 .span1.oneliner {
   float: left;
   width: auto;
@@ -193,14 +183,16 @@ margin-left:10%;
  Slide section
 **/
 
-.SlideList {
-  height: 100%;
+#SlideList {
+  margin: 0 auto;
+  position: relative;
+  width: 80%;
 }
 .slides {
   width: 100%;
   height: 100%;
-  left: 0;
-  top: 0;
+  position: absolute;
+
   /*margin-top: 50%;*/
   /*position: absolute;*/
   -webkit-transition: -webkit-transform 1.5s ease-in-out;
@@ -210,11 +202,11 @@ margin-left:10%;
 }
 
 .left.carousel-control{
-  margin-left: 100px;
+  margin-left: 20px;
 }
 
 .right.carousel-control{
-  margin-right: 70px;
+  margin-right: 20px;
 }
 
 .slide {
@@ -223,13 +215,17 @@ margin-left:10%;
   position: absolute;
   overflow: hidden;
   padding:20px;
-  width: 900px;
-  left: 50%;
+  width: 100%;
+  margin: 0 auto;
   background-color: #EAEAED;
   border-radius: 10px; 
   -moz-border-radius: 10px;
   opacity: 0.40;
-  top: 10%;
+  top: 80px;
+  
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  box-sizing: border-box;
 
   -webkit-transform: scale(0.8) translateZ(0);
   -moz-transform: scale(0.8);
@@ -250,19 +246,19 @@ margin-left:10%;
 
 .slide.far-past {
   display: block;
-  margin-left: -2400px;
+  margin-left: -100%;
 }
 
 .slide.past {
   visibility: visible;
   display: block;
-  margin-left: -1400px;
+  margin-left: -90%;
 }
 
 .slide.current {
   visibility: visible;
   display: block;
-  margin-left: -450px;
+  margin-left: 0px;
   -webkit-transform: scale(1.0);
   -moz-transform: scale(1.0);
   -o-transform: scale(1.0);
@@ -276,12 +272,12 @@ margin-left:10%;
 .slide.future {
   visibility: visible;
   display: block;
-  margin-left: 500px;
+  margin-left: 90%;
 }
 
 .slide.far-future {
   display: block;
-  margin-left: 1500px;
+  margin-left: 100%;
 }
 .logo{
   height: 40px;
@@ -329,43 +325,34 @@ margin-left:10%;
 
 @media (min-width: 1200px) { 
   .slide {
-    width: 1080px;
     height: 500px;
   }
   .slide.current {
-    margin-left: -540px;
+    margin-left: 0px;
   }
   .slide.current section {
     height: 500px;
-  }
-
-  .slide.past {
-    margin-left: -1580px;
   }
 } 
 
 @media (min-width: 780px) and (max-width: 1199px) { 
   .slide {
-    width: 700px;
     height: 400px;
   }
   .slide.current {
-    margin-left: -350px;
+    margin-left: 0px;
   }
   .slide.current section {
     height: 400px;
   }
-
-
 }
 
 @media (min-width: 768px) and (max-width: 979px) { 
   .slide {
-    width: 600px;
     height: 400px;
   }
   .slide.current {
-    margin-left: -300px;
+    margin-left: 0px;
   }
   .slide.current section {
     height: 400px;
@@ -375,11 +362,10 @@ margin-left:10%;
  
 @media (max-width: 767px) {
   .slide {
-    width: 480px;
     height: 350px;
   }
   .slide.current {
-    margin-left: -240px;
+    margin-left: 0px;
   }
   .slide.current section {
     height: 350px;
@@ -389,13 +375,36 @@ margin-left:10%;
 
 @media (max-width: 480px) { 
   .slide {
-    width: 400px;
     height: 200px;
   }
   .slide.current {
-    margin-left: -200px;
+    margin-left: 0px;
   }
   .slide.current section {
     height: 200px
+  }
+}
+
+@media (max-width: 360px) {
+  .slide {
+    height: 360px;
+  }
+  .slide.current {
+    margin-left: 0px;
+  }
+  .slide.current section {
+    height: 360px;
+  }
+}
+
+@media (max-width: 320px) {
+  .slide {
+    height: 360px;
+  }
+  .slide.current {
+    margin-left: 0px;
+  }
+  .slide.current section {
+    height: 360px;
   }
 }

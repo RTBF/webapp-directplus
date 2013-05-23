@@ -45,3 +45,4 @@ define [
         
         $("#loading").fadeOut()
         $("#wrap").fadeIn()
+        $("#header").fadeIn()

@@ -92,7 +92,8 @@ define(['jquery', 'backbone', 'application/views/organisationView'], function($,
       });
       $('.emissions').text($('#all-shows').text());
       $("#loading").fadeOut();
-      return $("#wrap").fadeIn();
+      $("#wrap").fadeIn();
+      return $("#header").fadeIn();
     };
 
     mainView.prototype.emptyConfs = function() {

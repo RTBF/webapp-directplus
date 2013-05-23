@@ -51,7 +51,8 @@ define(['jquery', 'backbone', 'application/models/slide', 'application/views/sli
         $('.dropdown-menu').append(organisationView.render().el);
       }
       $("#loading").fadeOut();
-      return $("#wrap").fadeIn();
+      $("#wrap").fadeIn();
+      return $("#header").fadeIn();
     };
 
     return appView;

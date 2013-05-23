@@ -1,9 +1,22 @@
-body{
-  background: #161616;
-  margin: 0;
-  padding: 0;
+html {
   height: 100%;
 }
-#wrap {
-  display: none;
+body {
+  color:white;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: black;
+  background: -webkit-linear-gradient(top, #333, black);
+  background: -moz-linear-gradient(top, #333, black);
+  background: linear-gradient(to bottom, #333, black);
+}
+
+ul {
+  list-style: none outside none;
 }

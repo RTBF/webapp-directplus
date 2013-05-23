@@ -85,6 +85,7 @@ define [
 
         $("#loading").fadeOut()
         $("#wrap").fadeIn()
+        $("#header").fadeIn()
 
       emptyConfs:()->
         console.log "got to empty home"
