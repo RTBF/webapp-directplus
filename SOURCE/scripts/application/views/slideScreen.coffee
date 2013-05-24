@@ -23,8 +23,8 @@ define [
         #@.$el.html @template(@model.toJSON())
         modelId = '#'+@model.get('id')
         if @model.get('state') is 'removed'
-          $(modelId).parent().slideUp()
-          $(modelId).parent().remove()
+          $(modelId).parent().slideUp ()=>
+           $(modelId).parent().remove()
           slidet=@model.get 'title'
           $('.bottom-right').notify
             type: 'inverse'

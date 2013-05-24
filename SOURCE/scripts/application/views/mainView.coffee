@@ -85,8 +85,8 @@ define [
           window.cancelAnimationFrame = (id) ->
             clearTimeout id
 
-        @carousel = new Carousel ".slides"
-        @carousel.init()
+        #@carousel = new Carousel ".slides"
+        #@carousel.init()
         
 
 
