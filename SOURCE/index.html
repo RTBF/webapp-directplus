@@ -21,13 +21,13 @@
       </div>
     </div>
 
-    <div id="header" style="display:none;"> 
+    <div id="header" style="display:none;">
       <div class="container-fluid">
         <div class="navbar navbar-inverse navbar-fixed-top emission-navbar">
           <div class="navbar-inner">
-            <a class="brand" href="#/home"><img  class="logo" src="skins/images/rtbf_be.png"></a>
+            <a class="" href="#/home"><img class="logo" src="skins/images/rtbf_be.png"></a>
             <div class="btn-group">
-              <a class="dropdown-toggle btn btn-inverse btn-large"  data-toggle="dropdown" href="#">
+              <a class="dropdown-toggle btn btn-inverse" data-toggle="dropdown" href="#">
                 <span class="emissions" ></span>
                 <span class="caret"></span>
               </a>
@@ -35,6 +35,7 @@
               <ul class="dropdown-menu emission-dropdown" role="menu" aria-labelledby="dLabel">
                   <li><a tabindex="-1" id="all-shows" >Toutes les emissions</a></li>
               </ul>
+              
             </div>
           </div>
         </div>
@@ -91,7 +92,7 @@
   </script>
 
   <script type="text/template" id="slide-template"> 
-            <div id="<%- id %>"  class="<%-Type%>" >
+            <div id="<%- id %>"  class="<%-Type%> slide-item" >
               <section class="middle">
                 <h2><%- title %></h2>
                 <img src="<%-thumb%>">
@@ -102,7 +103,7 @@
             </div>
   </script>
   <script type="text/template" id="slide-video-template"> 
-            <div id="<%- id %>" class="<%-Type%>">
+            <div id="<%- id %>" class="<%-Type%> slide-item">
               <section class="middle">
                 <p><h2>Vidéo:</h2><br/> <%- title %><p>
                 <iframe  src="http://www.youtube.com/embed/<%-thumb%>" frameborder="0" allowfullscreen></iframe>

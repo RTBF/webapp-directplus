@@ -2,7 +2,8 @@ define [
   'jquery'
   'backbone'
   'application/views/organisationView'
-  ],($,Backbone,OrganisationView)->
+  'application/views/carousel'
+  ],($,Backbone,OrganisationView,Carousel)->
 
     class mainView extends Backbone.View
    
@@ -24,7 +25,8 @@ define [
         $('#appcontainer').delegate '#prevpage', 'click', (e)=>
           @prevPage()
 
-        $('#appcontainer').delegate '#all-shows', 'click', (e)=>
+        $('#header').delegate '#all-shows', 'click', (e)=>
+
           @allShows()
 
         ###$('#prevpage').waypoint 
@@ -39,7 +41,7 @@ define [
         
         $('#appcontainer').scroll ()=>
           console.log "scroll"
-          console.log @model.allLoaded
+          #console.log @model.allLoaded
           if $("#nextpage").offset().top+$("#nextpage").outerHeight() is $('#appcontainer').height() and @model.allLoaded
             $("#nextpage").click()
 
@@ -62,6 +64,29 @@ define [
           e.preventDefault()
           @model.trigger "previous"
 
+        lastTime = 0
+        vendors = ["ms", "moz", "webkit", "o"]
+        x = 0
+
+        while x < vendors.length and not window.requestAnimationFrame
+          window.requestAnimationFrame = window[vendors[x] + "RequestAnimationFrame"]
+          window.cancelAnimationFrame = window[vendors[x] + "CancelAnimationFrame"] or window[vendors[x] + "CancelRequestAnimationFrame"]
+          ++x
+        unless window.requestAnimationFrame
+          window.requestAnimationFrame = (callback, element) ->
+            currTime = new Date().getTime()
+            timeToCall = Math.max(0, 16 - (currTime - lastTime))
+            id = window.setTimeout(->
+              callback currTime + timeToCall
+            , timeToCall)
+            lastTime = currTime + timeToCall
+            id
+        unless window.cancelAnimationFrame
+          window.cancelAnimationFrame = (id) ->
+            clearTimeout id
+
+        @carousel = new Carousel ".slides"
+        @carousel.init()
         
 
 
@@ -119,6 +144,8 @@ define [
       allShows:()->
         $('.emissions').text $('#all-shows').text()
         Backbone.history.navigate('home/', trigger:true)
+
+
 
         
             

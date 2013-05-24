@@ -52,6 +52,10 @@ define [
                   $('#SlideList').append(@.$el.html @templateVideo(@model.toJSON()))
                   
           $(modelId).parent().removeClass().addClass("slide").addClass(@model.get('state'))
+          if @model.get('state') isnt  'current'
+            $(modelId).parent().addClass 'scale'
+            # ...
+        $(modelId).parent().attr('style',' ')
           
         
         if @model.get('state') is 'out'

@@ -42,7 +42,7 @@ define [
         id = @model.get 'id'
         href =  '/conference/' + id+'/'+1
         console.log href
-        $('.conference').remove()
+        #$('.conference').remove()
         Backbone.history.navigate(href, trigger:true)
         $('.emissions').text @model.get('name')
 
